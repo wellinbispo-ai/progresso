@@ -8,12 +8,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
         }
+
         .container {
             max-width: 900px;
             background: white;
@@ -21,17 +28,26 @@
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             margin-top: 20px;
+            margin-bottom: 20px;
         }
+
         .header {
             text-align: center;
             margin-bottom: 30px;
         }
+
         .header h1 {
             color: #667eea;
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 10px;
         }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
         .score-display {
             text-align: center;
             padding: 30px;
@@ -39,17 +55,20 @@
             border-radius: 15px;
             margin: 30px 0;
         }
+
         .score-number {
             font-size: 5rem;
             font-weight: bold;
             color: #667eea;
             line-height: 1;
         }
+
         .score-label {
             font-size: 1.2rem;
             color: #666;
             margin-top: 10px;
         }
+
         .status-badge {
             display: inline-block;
             padding: 15px 30px;
@@ -58,43 +77,155 @@
             font-weight: bold;
             margin: 20px 0;
         }
+
         .status-good {
             background: #28a745;
             color: white;
         }
+
         .status-average {
             background: #ffc107;
             color: #333;
         }
+
         .chart-container {
             position: relative;
             height: 350px;
             margin: 30px 0;
         }
+
         .gauge-container {
             position: relative;
             height: 300px;
             margin: 30px 0;
         }
+
+        /* ===== NOVO DIAGNÓSTICO COM MINI CHAMADA ===== */
         .diagnosis {
             background: #f8f9fa;
-            border-left: 5px solid #dc3545;
-            padding: 20px;
+            border-left: 5px solid #667eea;
+            padding: 30px;
             border-radius: 10px;
             margin: 30px 0;
         }
+
         .diagnosis h4 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .improvement-item {
+            background: white;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .subject-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 12px;
+        }
+
+        .improvement-details {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .time-badge {
+            background: #fff3cd;
+            color: #856404;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .formula-badge {
+            background: #e7f3ff;
+            color: #004085;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .potential-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 12px 0;
+            font-weight: bold;
+            flex-wrap: wrap;
+        }
+
+        .current {
             color: #dc3545;
-            margin-bottom: 15px;
-        }
-        .diagnosis ul {
-            margin: 15px 0;
-            padding-left: 25px;
-        }
-        .diagnosis li {
-            margin: 8px 0;
             font-size: 1.1rem;
         }
+
+        .arrow {
+            color: #667eea;
+            font-size: 1.3rem;
+        }
+
+        .target {
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+
+        .gain {
+            background: #d4edda;
+            color: #155724;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .insight {
+            margin-top: 12px;
+            font-size: 1rem;
+            color: #555;
+            font-style: italic;
+            border-left: 3px solid #ffc107;
+            padding-left: 12px;
+            line-height: 1.5;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .summary-box h5 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .summary-box p {
+            margin: 10px 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .summary-box .hidden-mobile {
+            display: block;
+        }
+
+        /* ===== CTA SECTION ===== */
         .cta-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -103,10 +234,13 @@
             text-align: center;
             margin-top: 40px;
         }
+
         .cta-section h3 {
             font-size: 2rem;
             margin-bottom: 20px;
+            font-weight: bold;
         }
+
         .cta-message {
             background: #28a745;
             color: white;
@@ -119,6 +253,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             animation: pulse 2s infinite;
         }
+
         @keyframes pulse {
             0%, 100% {
                 transform: scale(1);
@@ -127,6 +262,7 @@
                 transform: scale(1.05);
             }
         }
+
         .ranking {
             text-align: center;
             padding: 20px;
@@ -134,16 +270,19 @@
             border-radius: 10px;
             margin: 20px 0;
         }
+
         .ranking-number {
             font-size: 2rem;
             font-weight: bold;
             color: #856404;
         }
+
         .arrow-down {
             font-size: 2rem;
             animation: bounce 1.5s infinite;
             margin-top: 15px;
         }
+
         @keyframes bounce {
             0%, 100% {
                 transform: translateY(0);
@@ -152,13 +291,164 @@
                 transform: translateY(-10px);
             }
         }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 767px) {
+            .container {
+                padding: 20px;
+                border-radius: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .score-number {
+                font-size: 3.5rem;
+            }
+
+            .score-label {
+                font-size: 1rem;
+            }
+
+            .status-badge {
+                padding: 12px 24px;
+                font-size: 1.1rem;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .gauge-container {
+                height: 250px;
+            }
+
+            .diagnosis {
+                padding: 20px;
+                border-left-width: 4px;
+            }
+
+            .diagnosis h4 {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+
+            .improvement-item {
+                padding: 15px;
+                margin: 15px 0;
+            }
+
+            .subject-name {
+                font-size: 1.05rem;
+            }
+
+            .improvement-details {
+                gap: 8px;
+                flex-direction: column;
+            }
+
+            .time-badge, .formula-badge {
+                font-size: 0.85rem;
+                padding: 5px 10px;
+            }
+
+            .potential-bar {
+                gap: 8px;
+                margin: 10px 0;
+            }
+
+            .current, .target {
+                font-size: 1rem;
+            }
+
+            .arrow {
+                font-size: 1.1rem;
+            }
+
+            .gain {
+                font-size: 0.85rem;
+                padding: 4px 8px;
+            }
+
+            .insight {
+                font-size: 0.95rem;
+                margin-top: 10px;
+                padding-left: 10px;
+            }
+
+            .summary-box {
+                padding: 15px;
+                margin-top: 20px;
+            }
+
+            .summary-box h5 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+
+            .summary-box p {
+                font-size: 0.95rem;
+                margin: 8px 0;
+            }
+
+            .summary-box .hidden-mobile {
+                display: none;
+            }
+
+            .cta-section {
+                padding: 25px;
+                margin-top: 30px;
+            }
+
+            .cta-section h3 {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+
+            .cta-message {
+                padding: 15px 30px;
+                font-size: 1.2rem;
+            }
+
+            .ranking {
+                padding: 15px;
+            }
+
+            .ranking-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .score-number {
+                font-size: 2.8rem;
+            }
+
+            .cta-message {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🎉 SEU RESULTADO</h1>
-            <p style="font-size: 1.2rem; color: #666;">Análise Completa do Seu Desempenho</p>
+            <p>Análise Completa do Seu Desempenho</p>
         </div>
 
         <!-- Pontuação Principal -->
@@ -186,13 +476,65 @@
             <canvas id="subjectChart"></canvas>
         </div>
 
-        <!-- Diagnóstico -->
+        <!-- NOVO DIAGNÓSTICO COM MINI CHAMADA -->
         <div class="diagnosis">
-            <h4>⚠️ PONTOS QUE PRECISAM DE ATENÇÃO:</h4>
-            <ul id="weakPoints"></ul>
-            <p style="margin-top: 20px; font-size: 1.1rem; font-weight: bold;">
-                ✅ Você está no caminho certo, mas ainda há lacunas importantes!
-            </p>
+            <h4>⚠️ ÁREAS PARA MELHORAR (Baseado em Seu Perfil):</h4>
+            
+            <div class="improvement-item">
+                <div class="subject-name">📊 Raciocínio Lógico: <span id="logic-score">-</span>%</div>
+                <div class="improvement-details">
+                    <span class="time-badge">⏱️ 30 dias</span>
+                    <span class="formula-badge">🔐 <span id="logic-current">-</span>% + Método (?) = 95%</span>
+                </div>
+                <div class="potential-bar">
+                    <span class="current"><span id="logic-current2">-</span>%</span>
+                    <span class="arrow">→</span>
+                    <span class="target">95%</span>
+                    <span class="gain">+<span id="logic-gain">-</span>%</span>
+                </div>
+                <p class="insight">💡 Você já tem <span id="logic-current3">-</span>% em você! Faltam apenas as técnicas para liberar os <span id="logic-gain2">-</span>% restantes.</p>
+            </div>
+
+            <div class="improvement-item">
+                <div class="subject-name">📊 Foco e Organização: <span id="focus-score">-</span>%</div>
+                <div class="improvement-details">
+                    <span class="time-badge">⏱️ 15 dias</span>
+                    <span class="formula-badge">🔐 <span id="focus-current">-</span>% + Disciplina (?) = 90%</span>
+                </div>
+                <div class="potential-bar">
+                    <span class="current"><span id="focus-current2">-</span>%</span>
+                    <span class="arrow">→</span>
+                    <span class="target">90%</span>
+                    <span class="gain">+<span id="focus-gain">-</span>%</span>
+                </div>
+                <p class="insight">💡 Você não precisa ficar mais inteligente. Precisa ficar mais ESTRATÉGICO.</p>
+            </div>
+
+            <div class="improvement-item">
+                <div class="subject-name">📊 Técnicas de Estudo: <span id="techniques-score">-</span>%</div>
+                <div class="improvement-details">
+                    <span class="time-badge">⏱️ 20 dias</span>
+                    <span class="formula-badge">🔐 <span id="techniques-current">-</span>% + Método (?) = 98%</span>
+                </div>
+                <div class="potential-bar">
+                    <span class="current"><span id="techniques-current2">-</span>%</span>
+                    <span class="arrow">→</span>
+                    <span class="target">98%</span>
+                    <span class="gain">+<span id="techniques-gain">-</span>%</span>
+                </div>
+                <p class="insight">💡 Essa é a área que mais impacta sua aprovação. Descubra a fórmula que 10 mil aprovados já usaram.</p>
+            </div>
+
+            <div class="summary-box">
+                <h5>🎯 RESUMO:</h5>
+                <p>✅ Você tem o POTENCIAL <span class="hidden-mobile">(68-70%)</span></p>
+                <p>❓ Você precisa da FÓRMULA <span class="hidden-mobile">(método certo)</span></p>
+                <p class="hidden-mobile">⚡ Você consegue em TEMPO RECORDE (15-30 dias)</p>
+                <p style="margin-top: 15px; font-size: 1.1rem; font-weight: bold;">
+                    ❓ Qual é a fórmula que falta?<br>
+                    👇 Descubra no vídeo abaixo...
+                </p>
+            </div>
         </div>
 
         <!-- CTA -->
@@ -217,12 +559,13 @@
         const baseScore = Math.floor(Math.random() * (85 - 70 + 1)) + 70;
         
         // Gera pontuações por matéria (variando ±10% da pontuação base)
+        // REMOVIDO: 'Português'
+        // ADICIONADO: 'Foco e Organização' e 'Técnicas de Estudo'
         const subjects = {
-            'Português': Math.min(100, Math.max(50, baseScore + Math.floor(Math.random() * 21) - 10)),
             'Raciocínio Lógico': Math.min(100, Math.max(50, baseScore + Math.floor(Math.random() * 21) - 10)),
             'Conhecimentos Gerais': Math.min(100, Math.max(50, baseScore + Math.floor(Math.random() * 21) - 10)),
-            'Legislação': Math.min(100, Math.max(50, baseScore + Math.floor(Math.random() * 21) - 10)),
-            'Conhecimentos Específicos': Math.min(100, Math.max(50, baseScore + Math.floor(Math.random() * 21) - 10))
+            'Foco e Organização': Math.min(100, Math.max(50, baseScore + Math.floor(Math.random() * 21) - 10)),
+            'Técnicas de Estudo': Math.min(100, Math.max(50, baseScore + Math.floor(Math.random() * 21) - 10))
         };
 
         // Animação do confete
@@ -280,16 +623,43 @@
         const rankingPos = Math.floor(1000 - (baseScore - 70) * 40);
         document.getElementById('rankingPosition').textContent = rankingPos + 'º';
 
-        // Identifica pontos fracos
-        const weakPointsList = document.getElementById('weakPoints');
-        const sortedSubjects = Object.entries(subjects).sort((a, b) => a[1] - b[1]);
-        const weakest = sortedSubjects.slice(0, 3);
+        // Preenche o diagnóstico com dados dinâmicos
+        const logicScore = subjects['Raciocínio Lógico'];
+        const focusScore = subjects['Foco e Organização'];
+        const techniquesScore = subjects['Técnicas de Estudo'];
 
-        weakest.forEach(([subject, score]) => {
-            const li = document.createElement('li');
-            li.textContent = `${subject}: ${score}% - Precisa de reforço`;
-            weakPointsList.appendChild(li);
-        });
+        // Raciocínio Lógico
+        document.getElementById('logic-score').textContent = logicScore;
+        document.getElementById('logic-current').textContent = logicScore;
+        document.getElementById('logic-current2').textContent = logicScore;
+        document.getElementById('logic-current3').textContent = logicScore;
+        document.getElementById('logic-gain').textContent = (95 - logicScore);
+        document.getElementById('logic-gain2').textContent = (95 - logicScore);
+
+        // Foco e Organização
+        document.getElementById('focus-score').textContent = focusScore;
+        document.getElementById('focus-current').textContent = focusScore;
+        document.getElementById('focus-current2').textContent = focusScore;
+        document.getElementById('focus-gain').textContent = (90 - focusScore);
+
+        // Técnicas de Estudo
+        document.getElementById('techniques-score').textContent = techniquesScore;
+        document.getElementById('techniques-current').textContent = techniquesScore;
+        document.getElementById('techniques-current2').textContent = techniquesScore;
+        document.getElementById('techniques-gain').textContent = (98 - techniquesScore);
+
+        // Identifica pontos fracos (3 piores notas)
+        const weakPointsList = document.getElementById('weakPoints');
+        if (weakPointsList) {
+            const sortedSubjects = Object.entries(subjects).sort((a, b) => a[1] - b[1]);
+            const weakest = sortedSubjects.slice(0, 3);
+
+            weakest.forEach(([subject, score]) => {
+                const li = document.createElement('li');
+                li.textContent = `${subject}: ${score}% - Precisa de reforço`;
+                weakPointsList.appendChild(li);
+            });
+        }
 
         // Cria gráfico gauge (medidor)
         const gaugeCtx = document.getElementById('gaugeChart').getContext('2d');
