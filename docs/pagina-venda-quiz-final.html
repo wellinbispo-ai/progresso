@@ -351,6 +351,30 @@
             margin: 0;
         }
 
+        /* ===== FRASE DE IMPACTO ===== */
+        .impact-phrase {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1.5;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            animation: pulse-impact 2s infinite;
+        }
+
+        @keyframes pulse-impact {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.95;
+            }
+        }
+
         /* ===== RESPONSIVIDADE ===== */
         @media (max-width: 767px) {
             .content {
@@ -390,6 +414,11 @@
                 flex-direction: column;
                 gap: 8px;
             }
+
+            .impact-phrase {
+                font-size: 1rem;
+                padding: 18px 20px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -420,7 +449,10 @@
     <div class="promo-banner">
         <div class="promo-text">
             <span>🎉 OFERTA ESPECIAL PARA VOCÊ!</span>
-            <span class="discount-badge">-39% DE DESCONTO</span>
+            <span class="discount-badge">- + DE 39% DE DESCONTO</span>
+        </div>
+        <div class="promo-text" style="margin-top: 8px; font-size: 0.95rem; opacity: 0.95;">
+            <span>⚡ Pague menos agora. Espere o edital e pague mais caro.</span>
         </div>
     </div>
 
@@ -445,6 +477,11 @@
                     <div class="social-value" id="viewers">681</div>
                     <div class="social-label">Candidatos como você</div>
                 </div>
+            </div>
+
+            <!-- FRASE DE IMPACTO -->
+            <div class="impact-phrase">
+                ⚡ Pague menos agora. Espere o edital e pague mais caro.
             </div>
 
             <!-- PREÇO PRINCIPAL -->
