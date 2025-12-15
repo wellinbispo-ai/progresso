@@ -451,6 +451,9 @@
             <span>🎉 OFERTA ESPECIAL PARA VOCÊ!</span>
             <span class="discount-badge">-43% DE DESCONTO</span>
         </div>
+        <div class="promo-text" style="margin-top: 8px; font-size: 0.95rem; opacity: 0.95;">
+            <span>⚡ Pague menos agora. Espere o edital e pague mais caro.</span>
+        </div>
     </div>
 
     <div class="container">
@@ -579,5 +582,38 @@
             setInterval(() => {
                 if (timeLeft > 0) {
                     timeLeft--;
-                    const hours = Math.flo
-(Content truncated due to size limit. Use page ranges or line ranges to read remaining content)
+                    const hours = Math.floor(timeLeft / 3600);
+                    const minutes = Math.floor((timeLeft % 3600) / 60);
+                    const seconds = timeLeft % 60;
+
+                    countdownElement.textContent = 
+                        String(hours).padStart(2, '0') + ':' +
+                        String(minutes).padStart(2, '0') + ':' +
+                        String(seconds).padStart(2, '0');
+                } else {
+                    countdownElement.textContent = '00:00:00';
+                    countdownElement.parentElement.style.opacity = '0.5';
+                }
+            }, 1000);
+        }
+
+        // Contador de pessoas assistindo (aleatório)
+        function updateViewers() {
+            const viewersElement = document.getElementById('viewers');
+            setInterval(() => {
+                const randomViewers = Math.floor(Math.random() * (750 - 600 + 1)) + 600;
+                viewersElement.textContent = randomViewers;
+            }, 3000);
+        }
+
+        // Inicia tudo ao carregar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                launchConfetti();
+            }, 500);
+            startCountdown();
+            updateViewers();
+        });
+    </script>
+</body>
+</html>
