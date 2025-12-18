@@ -1,85 +1,75 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barra de Progresso Motivacional</title>
-    <style>
-        /* Estilo do container principal, imitando o card roxo */
-        .custom-quiz-card {
-            background-color: #6a1b9a; /* Roxo escuro */
-            background-image: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%); /* Gradiente roxo */
-            border-radius: 15px;
-            padding: 20px;
-            color: white;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            max-width: 350px; /* Limita a largura para parecer um card de chat */
-            margin: 0 auto;
-            font-family: Arial, sans-serif; /* Fonte comum */
-        }
+<style>
+    /* Estilo do container principal, maior e mais impactante */
+    .custom-quiz-card {
+        background-color: #6a1b9a;
+        background-image: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%);
+        border-radius: 20px; /* Borda mais arredondada */
+        padding: 30px; /* Mais padding interno */
+        color: white;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Sombra mais forte */
+        max-width: 90%; /* Ocupa mais espaço na tela */
+        margin: 0 auto;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais moderna */
+    }
 
-        /* Estilo do título */
-        .custom-quiz-card h3 {
-            font-size: 1.3em;
-            margin-top: 0;
-            margin-bottom: 15px;
-            color: white;
-        }
+    /* Título principal */
+    .custom-quiz-card h3 {
+        font-size: 1.8em; /* Título maior */
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
 
-        /* Estilo da barra de progresso */
-        .custom-progress-container {
-            height: 15px;
-            background-color: rgba(255, 255, 255, 0.3); /* Fundo da barra mais claro */
-            border-radius: 7px;
-            margin-bottom: 15px;
-            overflow: hidden;
-        }
+    /* Barra de progresso */
+    .custom-progress-container {
+        height: 25px; /* Barra mais grossa */
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 12px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
 
-        .custom-progress-bar {
-            height: 100%;
-            background-color: #ffc107; /* Amarelo/Dourado do preenchimento */
-            background-image: linear-gradient(to right, #ffeb3b, #ffc107); /* Gradiente sutil */
-            border-radius: 7px;
-            transition: width 0.5s ease-in-out;
-            /* O valor de progresso será injetado aqui pelo Typebot */
-        }
+    .custom-progress-bar {
+        height: 100%;
+        background-color: #ffc107;
+        background-image: linear-gradient(to right, #ffeb3b, #ffc107);
+        border-radius: 12px;
+        transition: width 0.5s ease-in-out;
+        /* O Typebot injeta o valor aqui */
+    }
 
-        /* Estilo da mensagem motivacional */
-        .custom-motivational-message {
-            font-size: 1em;
-            font-weight: bold;
-            margin-top: 15px;
-            color: #ffeb3b; /* Amarelo para destaque */
-        }
+    /* Mensagem motivacional */
+    .custom-motivational-message {
+        font-size: 1.2em; /* Mensagem maior */
+        font-weight: 600;
+        margin-top: 15px;
+        color: #ffeb3b;
+    }
 
-        /* Estilo do texto de progresso */
-        .custom-progress-text {
-            font-size: 0.9em;
-            margin-top: 10px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.2);
-            display: inline-block;
-        }
-    </style>
-</head>
-<body>
-    <div class="custom-quiz-card">
-        <h3>Genial, estamos avançando...</h3>
+    /* Texto de progresso dinâmico */
+    .custom-progress-text {
+        font-size: 1.1em;
+        margin-top: 15px;
+        padding: 8px 15px;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.2);
+        display: inline-block;
+    }
+</style>
 
-        <div class="custom-progress-container">
-            <!-- O Typebot injetará o estilo de largura aqui -->
-            <div class="custom-progress-bar" style="width: {{progresso_visual}}%;"></div>
-        </div>
+<div class="custom-quiz-card">
+    <h3>Genial, estamos avançando...</h3>
 
-        <div class="custom-motivational-message">
-            Falta pouco para você entender o jogo!
-        </div>
-
-        <div class="custom-progress-text">
-            Progresso: {{progresso_visual}}%
-        </div>
+    <div class="custom-progress-container">
+        <div class="custom-progress-bar" style="width: {{progresso_visual}}%;"></div>
     </div>
-</body>
-</html>
+
+    <div class="custom-motivational-message">
+        Falta pouco para você entender o jogo e receber seu plano de ação!
+    </div>
+
+    <div class="custom-progress-text">
+        **Progresso de Análise:** {{progresso_visual}}%
+    </div>
+</div>
