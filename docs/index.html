@@ -3,113 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado do Quiz</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>Barra de Progresso Motivacional</title>
     <style>
-        body {
-            margin: 0;
-            padding: 10px;
-            background: transparent;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .quiz-container {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 25px;
+        /* Estilo do container principal, imitando o card roxo */
+        .custom-quiz-card {
+            background-color: #6a1b9a; /* Roxo escuro */
+            background-image: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%); /* Gradiente roxo */
             border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            padding: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 350px; /* Limita a largura para parecer um card de chat */
+            margin: 0 auto;
+            font-family: Arial, sans-serif; /* Fonte comum */
+        }
+
+        /* Estilo do título */
+        .custom-quiz-card h3 {
+            font-size: 1.3em;
+            margin-top: 0;
+            margin-bottom: 15px;
             color: white;
         }
-        .quiz-title {
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        .progress {
-            height: 40px;
-            border-radius: 20px;
+
+        /* Estilo da barra de progresso */
+        .custom-progress-container {
+            height: 15px;
+            background-color: rgba(255, 255, 255, 0.3); /* Fundo da barra mais claro */
+            border-radius: 7px;
+            margin-bottom: 15px;
             overflow: hidden;
-            background-color: rgba(255,255,255,0.3);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
         }
-        .progress-bar {
-            font-size: 20px;
+
+        .custom-progress-bar {
+            height: 100%;
+            background-color: #ffc107; /* Amarelo/Dourado do preenchimento */
+            background-image: linear-gradient(to right, #ffeb3b, #ffc107); /* Gradiente sutil */
+            border-radius: 7px;
+            transition: width 0.5s ease-in-out;
+            /* O valor de progresso será injetado aqui pelo Typebot */
+        }
+
+        /* Estilo da mensagem motivacional */
+        .custom-motivational-message {
+            font-size: 1em;
             font-weight: bold;
-            line-height: 40px;
-            transition: width 2.5s ease-in-out;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            margin-top: 15px;
+            color: #ffeb3b; /* Amarelo para destaque */
         }
-        .quiz-message {
-            text-align: center;
-            margin-top: 18px;
-            font-size: 18px;
-            font-weight: 500;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-        }
-        .score-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 8px 20px;
-            border-radius: 25px;
+
+        /* Estilo do texto de progresso */
+        .custom-progress-text {
+            font-size: 0.9em;
             margin-top: 10px;
-            font-size: 16px;
-            backdrop-filter: blur(10px);
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.2);
+            display: inline-block;
         }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <div class="quiz-title">📊 Seu Resultado do Quiz</div>
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" 
-                 role="progressbar" 
-                 id="quizProgress"
-                 style="width: 0%">
-                0%
-            </div>
+    <div class="custom-quiz-card">
+        <h3>Genial, estamos avançando...</h3>
+
+        <div class="custom-progress-container">
+            <!-- O Typebot injetará o estilo de largura aqui -->
+            <div class="custom-progress-bar" style="width: {{progresso_visual}}%;"></div>
         </div>
-        <div class="quiz-message" id="resultMessage">
-            <div>Calculando seu resultado...</div>
+
+        <div class="custom-motivational-message">
+            Falta pouco para você entender o jogo!
+        </div>
+
+        <div class="custom-progress-text">
+            Progresso: {{progresso_visual}}%
         </div>
     </div>
-
-    <script>
-        function getRandomScore() {
-            return Math.floor(Math.random() * (90 - 75 + 1)) + 75;
-        }
-
-        function showResult() {
-            const progressBar = document.getElementById('quizProgress');
-            const messageEl = document.getElementById('resultMessage');
-            const score = getRandomScore();
-            
-            let message = '';
-            let barColor = '';
-            
-            if (score >= 85) {
-                message = '🎉 Excelente! Você está muito bem preparado!';
-                barColor = 'bg-success';
-            } else if (score >= 80) {
-                message = '👏 Muito bom! Continue assim!';
-                barColor = 'bg-info';
-            } else {
-                message = '✅ Bom trabalho! Você está no caminho certo!';
-                barColor = 'bg-warning';
-            }
-            
-            setTimeout(() => {
-                progressBar.style.width = score + '%';
-                progressBar.textContent = score + '%';
-                progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated ' + barColor;
-                messageEl.innerHTML = `
-                    <div>${message}</div>
-                    <div class="score-badge">Pontuação: ${score}%</div>
-                `;
-            }, 300);
-        }
-
-        window.addEventListener('load', showResult);
-    </script>
 </body>
 </html>
