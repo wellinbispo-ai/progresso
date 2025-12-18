@@ -1,75 +1,143 @@
-<style>
-    /* Estilo do container principal, maior e mais impactante */
-    .custom-quiz-card {
-        background-color: #6a1b9a;
-        background-image: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%);
-        border-radius: 20px;
-        padding: 30px;
-        color: white;
-        text-align: center;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        max-width: 90%;
-        margin: 0 auto;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barra de Progresso Persuasiva</title>
+    <!-- Usando o Bootstrap 5 para manter o estilo do modelo -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background-color: #f4f7f9; /* Fundo neutro para destacar o componente */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .progress-component-container {
+            max-width: 500px;
+            width: 100%;
+        }
+        .quiz-container { /* Mantendo o nome da classe do modelo para o estilo */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            color: white;
+        }
+        .quiz-title {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .progress {
+            height: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: rgba(255,255,255,0.3);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .progress-bar {
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 40px;
+            transition: width 1.5s ease-out, background-color 0.6s ease; /* Transição para efeito visual */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .quiz-message {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 18px;
+            font-weight: 500;
+            min-height: 50px; /* Para evitar pulo de layout */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-component-container">
+        <div class="quiz-container">
+            <div class="quiz-title">🚀 Seu Progresso no Fluxo!</div>
+            
+            <div class="progress-stats">
+                <span id="progressValues"></span>
+                <span id="progressPercentage"></span>
+            </div>
 
-    /* Título principal */
-    .custom-quiz-card h3 {
-        font-size: 1.8em;
-        margin-top: 0;
-        margin-bottom: 20px;
-        font-weight: 700;
-    }
-
-    /* Barra de progresso */
-    .custom-progress-container {
-        height: 25px;
-        background-color: rgba(255, 255, 255, 0.3);
-        border-radius: 12px;
-        margin-bottom: 20px;
-        overflow: hidden;
-    }
-
-    .custom-progress-bar {
-        height: 100%;
-        background-color: #ffc107;
-        background-image: linear-gradient(to right, #ffeb3b, #ffc107);
-        border-radius: 12px;
-        transition: width 0.5s ease-in-out;
-        /* O Typebot injeta o valor aqui */
-    }
-
-    /* Mensagem motivacional */
-    .custom-motivational-message {
-        font-size: 1.2em;
-        font-weight: 600;
-        margin-top: 15px;
-        color: #ffeb3b;
-    }
-
-    /* Texto de progresso dinâmico */
-    .custom-progress-text {
-        font-size: 1.1em;
-        margin-top: 15px;
-        padding: 8px 15px;
-        border-radius: 8px;
-        background-color: rgba(0, 0, 0, 0.2);
-        display: inline-block;
-    }
-</style>
-
-<div class="custom-quiz-card">
-    <h3>Genial, estamos avançando...</h3>
-
-    <div class="custom-progress-container">
-        <div class="custom-progress-bar" style="width: {{progresso_visual}}%;"></div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                     role="progressbar" 
+                     id="flowProgress"
+                     style="width: 0%">
+                </div>
+            </div>
+            
+            <div class="quiz-message" id="motivationalMessage">
+                Carregando seu progresso...
+            </div>
+        </div>
     </div>
 
-    <div class="custom-motivational-message">
-        Falta pouco para você entender o jogo e receber seu plano de ação!
-    </div>
+    <script>
+        const progressBar = document.getElementById('flowProgress');
+        const progressPercentageEl = document.getElementById('progressPercentage');
+        const progressValuesEl = document.getElementById('progressValues');
+        const motivationalMessageEl = document.getElementById('motivationalMessage');
 
-    <div class="custom-progress-text">
-        Progresso de Análise: {{progresso_visual}}%
-    </div>
-</div>
+        // Configurações solicitadas
+        const TOTAL_STEPS = 7;
+        const MIN_PERCENTAGE = 65;
+        const MAX_PERCENTAGE = 87;
+
+        function generateRandomProgress() {
+            // Gera um valor aleatório entre 65% e 87%
+            const percentage = Math.floor(Math.random() * (MAX_PERCENTAGE - MIN_PERCENTAGE + 1)) + MIN_PERCENTAGE;
+            
+            // Simula o passo atingido com base na porcentagem e no total de passos
+            const currentStep = Math.min(TOTAL_STEPS - 1, Math.ceil((percentage / 100) * TOTAL_STEPS));
+
+            // 1. Atualiza Largura da Barra
+            progressBar.style.width = percentage + '%';
+            
+            // 2. Atualiza Porcentagem e Valores Fictícios
+            progressPercentageEl.textContent = percentage + '%';
+            progressValuesEl.textContent = `Passo ${currentStep} de ${TOTAL_STEPS} (Fictício)`;
+            
+            // 3. Atualiza Cor Dinâmica (Usando classes do Bootstrap)
+            progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated';
+            
+            let message = '';
+            
+            if (percentage < 75) {
+                progressBar.classList.add('bg-warning'); // Amarelo
+                message = `🔥 **Você está a um passo de finalizar!** Seu progresso de ${percentage}% é a prova de que você não pode parar agora. **Complete o fluxo e garanta seu resultado!**`;
+            } else {
+                progressBar.classList.add('bg-info'); // Azul
+                message = `🎯 **Quase 90% de conclusão!** Seu resultado está pronto. Não perca a chance de finalizar e **desbloquear o que preparamos para você!**`;
+            }
+            
+            // 4. Atualiza Mensagem Persuasiva
+            motivationalMessageEl.innerHTML = message;
+        }
+
+        // Gera o progresso aleatório ao carregar a página
+        document.addEventListener('DOMContentLoaded', generateRandomProgress);
+    </script>
+</body>
+</html>
