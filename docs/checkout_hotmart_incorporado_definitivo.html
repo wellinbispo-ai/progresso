@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout Integrado - Protocolo sincronicidad Cuántico</title>
+    <title>Acceso al Protocolo sincronicidad Cuántico</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Estilos baseados no diagnóstico anterior */
+        /* Estilos baseados no diagnóstico anterior e ajustados para telas menores */
         body {
             margin: 0;
-            padding: 10px; /* Reduzir o padding do body */
+            padding: 10px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
@@ -19,30 +19,30 @@
         }
 
         .main-container {
-            max-width: 450px; /* AJUSTE CRÍTICO: Reduzir para se adequar ao Typebot */
+            max-width: 450px; /* Largura ajustada para Typebot */
             width: 100%;
             background: white;
-            border-radius: 15px; /* Reduzir o border-radius */
-            padding: 20px; /* Reduzir o padding interno */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Reduzir a sombra */
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             margin-top: 15px;
             margin-bottom: 15px;
+            text-align: center;
         }
 
         .header {
-            text-align: center;
             margin-bottom: 20px;
         }
 
         .header h1 {
-            font-size: 1.8rem; /* Reduzir o tamanho da fonte */
+            font-size: 1.8rem;
             font-weight: bold;
             color: #667eea;
             margin-bottom: 5px;
         }
 
         .header h2 {
-            font-size: 1.2rem; /* Reduzir o tamanho da fonte */
+            font-size: 1.2rem;
             font-weight: 800;
             color: #ffc107;
             margin-bottom: 15px;
@@ -50,44 +50,50 @@
         }
 
         .header p {
-            font-size: 1rem; /* Reduzir o tamanho da fonte */
+            font-size: 1rem;
             color: #333;
         }
 
-        /* Estilo do Iframe do Checkout */
-        .checkout-iframe-container {
-            width: 100%;
-            height: 700px; /* Altura ajustada */
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 15px;
-        }
-
-        .checkout-iframe {
-            width: 100%;
-            height: 100%;
+        /* Estilo do Botão de Checkout */
+        .checkout-button {
+            background-color: #28a745; /* Verde para o CTA de Compra */
+            color: white;
             border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .checkout-button:hover {
+            background-color: #1e7e34;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
         }
 
         /* Seção de Garantia */
         .guarantee-section {
             margin-top: 20px;
-            padding: 15px; /* Reduzir o padding */
+            padding: 15px;
             border: 2px dashed #ffc107;
             border-radius: 10px;
             background-color: #fffbe6;
-            text-align: center;
         }
 
         .guarantee-section img {
-            width: 60px; /* Reduzir o tamanho do selo */
+            width: 60px;
             height: auto;
             margin-bottom: 5px;
         }
 
         .guarantee-section p {
-            font-size: 0.9rem; /* Reduzir o tamanho da fonte */
+            font-size: 0.9rem;
             color: #856404;
             font-weight: 500;
             margin: 0;
@@ -96,7 +102,7 @@
         /* Seção de Segurança Hotmart */
         .security-section {
             margin-top: 15px;
-            padding: 10px; /* Reduzir o padding */
+            padding: 10px;
             background-color: #f8f9fa;
             border-radius: 10px;
             text-align: center;
@@ -104,7 +110,7 @@
         }
 
         .security-section p {
-            font-size: 0.8rem; /* Reduzir o tamanho da fonte */
+            font-size: 0.8rem;
             color: #555;
             margin-bottom: 3px;
         }
@@ -122,23 +128,19 @@
             <p>Tu diagnóstico reveló que este es el paso final para eliminar tu bloqueo financiero.</p>
         </div>
 
-        <!-- Seção de Garantia (Acima do Checkout) -->
+        <!-- Seção de Garantia -->
         <div class="guarantee-section">
             <!-- Imagem de Selo de Garantia de 30 Dias -->
             <img src="https://www.imagemhost.com.br/images/2025/02/01/Selo-de-Garantia-de-30-Dias-PNG-Transparente-Sem-Fundo.png" alt="Sello de Garantía de 30 Días" class="guarantee-img">
             <p><strong>Garantía Total de 30 Días:</strong> Si por alguna razón no sientes que el Protocolo sincronicidad Cuántico es para ti, te devolvemos el 100% de tu inversión. ¡Riesgo Cero!</p>
         </div>
 
-        <!-- Iframe do Checkout da Hotmart -->
-        <div class="checkout-iframe-container">
-            <iframe 
-                src="https://pay.hotmart.com/V102694894Y?off=b1tprlhf&checkoutMode=10" 
-                class="checkout-iframe" 
-                title="Checkout Hotmart Incorporado">
-            </iframe>
-        </div>
+        <!-- Botão Persuasivo para Abrir o Checkout em Pop-up -->
+        <a href="https://pay.hotmart.com/V102694894Y?off=b1tprlhf&checkoutMode=10" target="_blank" class="checkout-button">
+            SÍ, QUIERO ACCEDER AL PROTOCOLO AHORA
+        </a>
 
-        <!-- Seção de Segurança Hotmart (Abaixo do Checkout) -->
+        <!-- Seção de Segurança Hotmart -->
         <div class="security-section">
             <p>🔒 Pago 100% Seguro y Procesado por <strong>Hotmart</strong>.</p>
             <p>Tu acceso será liberado inmediatamente por Hotmart tras la confirmación del pago.</p>
