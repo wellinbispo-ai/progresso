@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Integrado - Protocolo Cuántico</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos baseados no diagnóstico anterior */
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alinhar ao topo para melhor visualização do checkout */
+        }
+
+        .main-container {
+            max-width: 800px; /* Aumentar o container para acomodar o checkout */
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        /* Estilo do Iframe do Checkout */
+        .checkout-iframe-container {
+            width: 100%;
+            height: 800px; /* Altura suficiente para o checkout */
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .checkout-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Seção de Garantia */
+        .guarantee-section {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px dashed #ffc107;
+            border-radius: 10px;
+            background-color: #fffbe6;
+            text-align: center;
+        }
+
+        .guarantee-section img {
+            width: 80px; /* Tamanho ajustado para o selo */
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .guarantee-section p {
+            font-size: 1rem;
+            color: #856404;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Seção de Segurança Hotmart */
+        .security-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+            border-top: 3px solid #667eea;
+        }
+
+        .security-section p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .security-section strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>¡Finaliza tu Inscripción al Protocolo Cuántico!</h1>
+            <p>Tu diagnóstico reveló que este es el paso final para eliminar tu bloqueo financiero.</p>
+        </div>
+
+        <!-- Seção de Garantia (Acima do Checkout) -->
+        <div class="guarantee-section">
+            <!-- Imagem de Selo de Garantia Estável -->
+            <img src="https://www.imagemhost.torphe.org/images/2025/11/10/Selo_de_Garantia_de_7_Dias_PNG_Transparente_Sem_Fundo.png" alt="Sello de Garantía de 7 Días" class="guarantee-img">
+            <p><strong>Garantía Total de 7 Días:</strong> Si por alguna razón no sientes que el Protocolo Cuántico es para ti, te devolvemos el 100% de tu inversión. ¡Riesgo Cero!</p>
+        </div>
+
+        <!-- Iframe do Checkout da Hotmart -->
+        <div class="checkout-iframe-container">
+            <iframe 
+                src="https://pay.hotmart.com/V102694894Y?off=b1tprlhf&checkoutMode=10" 
+                class="checkout-iframe" 
+                title="Checkout Hotmart Incorporado">
+            </iframe>
+        </div>
+
+        <!-- Seção de Segurança Hotmart (Abaixo do Checkout) -->
+        <div class="security-section">
+            <p>🔒 Pago 100% Seguro y Procesado por <strong>Hotmart</strong>.</p>
+            <p>Tu acceso será liberado inmediatamente por Hotmart tras la confirmación del pago.</p>
+        </div>
+    </div>
+</body>
+</html>
