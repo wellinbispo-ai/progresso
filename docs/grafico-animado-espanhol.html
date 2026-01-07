@@ -28,22 +28,30 @@
 
         .quiz-container {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 25px;
+            padding: 22px;
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             color: white;
         }
 
         .quiz-title {
-            margin-bottom: 20px;
-            font-size: 24px;
+            margin-bottom: 18px;
+            font-size: 22px;
             font-weight: bold;
             text-align: center;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
         .progress {
-            height: 40px;
+            height: 38px;
             border-radius: 20px;
             overflow: hidden;
             background-color: rgba(255,255,255,0.3);
@@ -51,31 +59,22 @@
         }
 
         .progress-bar {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
-            line-height: 40px;
+            line-height: 38px;
             transition: width 1.5s ease-out, background-color 0.6s ease;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
+        /* TEXTO ABAIXO DA BARRA (CORRIGIDO) */
         .quiz-message {
-            text-align: center;
-            margin-top: 18px;
-            font-size: 18px;
-            font-weight: 500;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-        }
-
-        .progress-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
+            margin-top: 14px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 500;
+            line-height: 1.45;
+            text-align: left;
+            display: block;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
         }
     </style>
 </head>
@@ -93,10 +92,11 @@
             </div>
 
             <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated"
-                     role="progressbar"
-                     id="flowProgress"
-                     style="width: 0%">
+                <div
+                    class="progress-bar progress-bar-striped progress-bar-animated"
+                    role="progressbar"
+                    id="flowProgress"
+                    style="width: 0%">
                 </div>
             </div>
 
@@ -119,30 +119,38 @@
         const MAX_PERCENTAGE = 87;
 
         function generateRandomProgress() {
-            // Genera un valor aleatorio entre 65% y 87%
-            const percentage = Math.floor(Math.random() * (MAX_PERCENTAGE - MIN_PERCENTAGE + 1)) + MIN_PERCENTAGE;
+            // Porcentaje aleatorio entre 65% y 87%
+            const percentage = Math.floor(
+                Math.random() * (MAX_PERCENTAGE - MIN_PERCENTAGE + 1)
+            ) + MIN_PERCENTAGE;
 
-            // Calcula el paso actual
-            const currentStep = Math.min(TOTAL_STEPS - 1, Math.ceil((percentage / 100) * TOTAL_STEPS));
+            const currentStep = Math.min(
+                TOTAL_STEPS - 1,
+                Math.ceil((percentage / 100) * TOTAL_STEPS)
+            );
 
-            // Actualiza la barra
             progressBar.style.width = percentage + '%';
-
-            // Texto de progreso
             progressPercentageEl.textContent = percentage + '%';
-            progressValuesEl.textContent = `Paso ${currentStep} de ${TOTAL_STEPS} (Es rápido)`;
+            progressValuesEl.textContent = `Paso ${currentStep} de ${TOTAL_STEPS}`;
 
-            // Resetea clases
             progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated';
 
             let message = '';
 
             if (percentage < 75) {
                 progressBar.classList.add('bg-warning');
-                message = `🔥 <strong>¡Estás a un paso de finalizar!</strong> Tu progreso del ${percentage}% demuestra que no puedes detenerte ahora. <strong>Completa el flujo y asegura tu resultado.</strong>`;
+                message = `
+                    🔥 <strong>Estás muy cerca de finalizar.</strong><br>
+                    Tu progreso del ${percentage}% indica que ya hiciste lo más difícil.
+                    <strong>Continúa el flujo y asegura tu resultado.</strong>
+                `;
             } else {
                 progressBar.classList.add('bg-info');
-                message = `🎯 <strong>¡Casi el 90% completado!</strong> Tu resultado está listo. No pierdas la oportunidad de finalizar y <strong>desbloquear lo que preparamos para ti.</strong>`;
+                message = `
+                    🎯 <strong>¡Casi completado!</strong><br>
+                    Alcanzaste el ${percentage}% del proceso.
+                    <strong>Finaliza ahora y desbloquea lo que preparamos para ti.</strong>
+                `;
             }
 
             motivationalMessageEl.innerHTML = message;
