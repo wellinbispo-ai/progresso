@@ -1,128 +1,217 @@
+
+Você disse:
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso al Protocolo sincronicidad Cuántico</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
-<style>
-body{
-    margin:0;
-    padding:10px;
-    background:linear-gradient(135deg,#667eea,#764ba2);
-    font-family:Segoe UI,Tahoma,sans-serif;
-    display:flex;
-    justify-content:center;
-}
-.container{
-    max-width:450px;
-    background:#fff;
-    border-radius:16px;
-    padding:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.3);
-    text-align:center;
-}
-.product-image img{
-    width:100%;
-    border-radius:12px;
-    box-shadow:0 8px 25px rgba(0,0,0,.25);
-    margin-bottom:15px;
-}
-h1{
-    font-size:1.6rem;
-    font-weight:800;
-    color:#667eea;
-}
-h2{
-    font-size:1.1rem;
-    color:#ffc107;
-    margin-bottom:10px;
-}
-.counter{
-    background:#000;
-    color:#fff;
-    font-size:1.4rem;
-    font-weight:800;
-    padding:10px;
-    border-radius:8px;
-    margin:15px 0;
-}
-.bonus{
-    background:#f0f8ff;
-    border:1px solid #667eea;
-    border-radius:10px;
-    padding:15px;
-    margin-top:15px;
-}
-.btn{
-    display:block;
-    margin-top:20px;
-    padding:16px;
-    background:#28a745;
-    color:#fff;
-    font-size:1.1rem;
-    font-weight:800;
-    border-radius:10px;
-    text-decoration:none;
-}
-.guarantee{
-    margin-top:15px;
-    font-size:.9rem;
-    background:#fffbe6;
-    border:2px dashed #ffc107;
-    border-radius:10px;
-    padding:12px;
-}
-</style>
+
+
+
+
+
+
+    <style>
+        /* Estilos baseados no diagnóstico anterior e ajustados para telas menores */
+        body {
+            margin: 0;
+            padding: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .main-container {
+            max-width: 450px; /* Largura ajustada para Typebot */
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-top: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .header h2 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffc107;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        /* Seção de Bônus */
+        .bonus-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff; /* Fundo claro para destacar */
+            border-radius: 10px;
+            border: 1px solid #667eea;
+        }
+
+        .bonus-section h3 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .bonus-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .bonus-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: #28a745; /* Cor verde para os ícones */
+        }
+
+        .bonus-text {
+            font-size: 1rem;
+            color: #333;
+            font-weight: 500;
+        }
+        /* Fim Seção de Bônus */
+
+        /* Estilo do Botão de Checkout */
+        .checkout-button {
+            background-color: #28a745; /* Verde para o CTA de Compra */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .checkout-button:hover {
+            background-color: #1e7e34;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+        }
+
+        /* Seção de Garantia */
+        .guarantee-section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px dashed #ffc107;
+            border-radius: 10px;
+            background-color: #fffbe6;
+        }
+
+        .guarantee-section img {
+            width: 60px;
+            height: auto;
+            margin-bottom: 5px;
+        }
+
+        .guarantee-section p {
+            font-size: 0.9rem;
+            color: #856404;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Seção de Segurança Hotmart */
+        .security-section {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+            border-top: 3px solid #667eea;
+        }
+
+        .security-section p {
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 3px;
+        }
+
+        .security-section strong {
+            color: #667eea;
+        }
+    </style>
 </head>
-
 <body>
-<div class="container">
+    <div class="main-container">
+        <div class="header">
+            <h1>¡Finaliza tu Inscripción al Protocolo sincronicidad Cuántico!</h1>
+            <h2>🎥 Sistema audiovisual probado con clases en video que te llevan al resultado</h2>
+            <p>Tu diagnóstico reveló que este es el paso final para eliminar tu bloqueo financiero.</p>
+        </div>
 
-    <!-- IMAGEM -->
-    <div class="product-image">
-        <img src="https://SEU_LINK_PUBLICO_DA_IMAGEM.png">
+        <!-- Seção de Bônus -->
+        <div class="bonus-section">
+            <h3>🎁 ¡Acceso Inmediato a 3 Bonos Exclusivos!</h3>
+            
+            <div class="bonus-item">
+                <span class="bonus-icon">✨</span>
+                <span class="bonus-text">El Protocolo de Limpieza Energética</span>
+            </div>
+            
+            <div class="bonus-item">
+                <span class="bonus-icon">🧭</span>
+                <span class="bonus-text">La Guía de Sincronicidad Diaria</span>
+            </div>
+            
+            <div class="bonus-item">
+                <span class="bonus-icon">🚀</span>
+                <span class="bonus-text">El Mapa de Manifestación Acelerada</span>
+            </div>
+        </div>
+        <!-- Fim Seção de Bônus -->
+
+        <!-- Seção de Garantia -->
+        <div class="guarantee-section">
+            <!-- Imagem de Selo de Garantia de 30 Dias -->
+            <img src="https://www.imagemhost.com.br/images/2025/02/01/Selo-de-Garantia-de-30-Dias-PNG-Transparente-Sem-Fundo.png" alt="Sello de Garantía de 30 Días" class="guarantee-img">
+            <p><strong>Garantía Total de 30 Días:</strong> Si por alguna razón no sientes que el Protocolo sincronicidad Cuántico es para ti, te devolvemos el 100% de tu inversión. ¡Riesgo Cero!</p>
+        </div>
+
+        <!-- Botão Persuasivo para Abrir o Checkout em Pop-up -->
+        <a href="https://pay.hotmart.com/V102694894Y?off=b1tprlhf&checkoutMode=10" target="_blank" class="checkout-button">
+            SÍ, QUIERO ACCEDER AL PROTOCOLO AHORA
+        </a>
+
+        <!-- Seção de Segurança Hotmart -->
+        <div class="security-section">
+            <p>🔒 Pago 100% Seguro y Procesado por <strong>Hotmart</strong>.</p>
+            <p>Tu acceso será liberado inmediatamente por Hotmart tras la confirmación del pago.</p>
+        </div>
     </div>
-
-    <h1>Acceso final al Protocolo de Sincronía Cuántica</h1>
-    <h2>Sistema audiovisual probado</h2>
-
-    <!-- CONTADOR -->
-    <div class="counter" id="counter">
-        09:59
-    </div>
-
-    <p>Este acceso se libera solo durante este tiempo.</p>
-
-    <div class="bonus">
-        🎁 Limpieza Energética<br>
-        🧭 Sincronicidad Diaria<br>
-        🚀 Manifestación Acelerada
-    </div>
-
-    <a class="btn" href="https://pay.hotmart.com/V102694894Y?off=b1tprlhf&checkoutMode=10">
-        SÍ, QUIERO ACCEDER AHORA
-    </a>
-
-    <div class="guarantee">
-        Garantía total de 30 días. Riesgo cero.
-    </div>
-
-</div>
-
-<script>
-let time = 600;
-const el = document.getElementById("counter");
-
-setInterval(() => {
-    let min = Math.floor(time / 60);
-    let sec = time % 60;
-    el.innerHTML = 
-        String(min).padStart(2,'0') + ":" + 
-        String(sec).padStart(2,'0');
-    time--;
-    if(time < 0) time = 600;
-},1000);
-</script>
-
 </body>
 </html>
+
