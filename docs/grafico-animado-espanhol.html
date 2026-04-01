@@ -1,49 +1,125 @@
-function generateDynamicResult(){
-    const score = Math.floor(Math.random()*100);
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barra de Progreso</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .progress-component-container {
+            max-width: 500px;
+            width: 100%;
+            margin: 80px auto;
+        }
+        .quiz-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            color: white;
+        }
+        .quiz-title {
+            margin-bottom: 18px;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .progress-stats {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .progress {
+            height: 38px;
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: rgba(255,255,255,0.3);
+        }
+        .progress-bar {
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 38px;
+            transition: width 1.2s ease;
+        }
+        .quiz-message {
+            margin-top: 14px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+<div class="progress-component-container">
+    <div class="quiz-container">
+        <div class="quiz-title">🚀 ¡Tu progreso en el quiz!</div>
+        <div class="progress-stats">
+            <span id="progressPercentage"></span>
+        </div>
+        <div class="progress">
+            <div
+                id="flowProgress"
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                style="width: 0%">
+            </div>
+        </div>
+        <div class="quiz-message" id="motivationalMessage">
+            Cargando...
+        </div>
+    </div>
+</div>
 
-    let blockage, summary, insight, current, target, status, color;
+<script>
+window.onload = function () {
+    var progressBar = document.getElementById('flowProgress');
+    var progressPercentageEl = document.getElementById('progressPercentage');
+    var motivationalMessageEl = document.getElementById('motivationalMessage');
 
-    if(score<30){
-        blockage="Miedo al Éxito";
-        summary="Bloqueo crítico detectado.";
-        insight="Tu subconsciente rechaza la abundancia.";
-        current=15;target=95;status="ALERTA";color="bg-danger";
-    }else if(score<60){
-        blockage="Patrones de Deuda";
-        summary="Estancamiento energético.";
-        insight="Necesitas romper el patrón.";
-        current=40;target=85;status="ESTANCADO";color="bg-warning";
-    }else if(score<85){
-        blockage="Fugas de Energía";
-        summary="Potencial latente.";
-        insight="Ajuste preciso necesario.";
-        current=70;target=90;status="OPORTUNIDAD";color="bg-info";
-    }else{
-        blockage="Expansión Limitada";
-        summary="Alta alineación.";
-        insight="Momento de escalar.";
-        current=85;target=99;status="MAESTRÍA";color="bg-success";
-    }
+    var variacoes = [
+        {
+            pct: 80,
+            cor: 'bg-warning',
+            msg: '🔥 <strong>¡Ya casi terminas!</strong><br>Completaste el 80% del proceso.<br><strong>Falta solo 1 pregunta para ver tu resultado.</strong>'
+        },
+        {
+            pct: 82,
+            cor: 'bg-warning',
+            msg: '💪 <strong>¡Lo estás haciendo muy bien!</strong><br>82% completado.<br><strong>Solo una pregunta más y todo quedará claro.</strong>'
+        },
+        {
+            pct: 85,
+            cor: 'bg-success',
+            msg: '✨ <strong>¡Progreso increíble!</strong><br>Ya llegaste al 85%.<br><strong>Falta apenas 1 etapa para tu resultado.</strong>'
+        },
+        {
+            pct: 83,
+            cor: 'bg-warning',
+            msg: '🎯 <strong>¡Llegaste muy lejos!</strong><br>83% del camino recorrido.<br><strong>1 pregunta más y descubrís todo.</strong>'
+        },
+        {
+            pct: 87,
+            cor: 'bg-success',
+            msg: '🚀 <strong>¡Casi al final!</strong><br>Completaste el 87% del análisis.<br><strong>¡Solo 1 pregunta más, no te rindas ahora!</strong>'
+        }
+    ];
 
-    document.getElementById("scoreNumber").textContent = score;
-    document.getElementById("headerSubtitle").textContent = summary;
+    var sorteio = variacoes[Math.floor(Math.random() * variacoes.length)];
 
-    const badge = document.getElementById("statusBadge");
-    badge.textContent = status;
-    badge.className = "status-badge " + color;
+    progressPercentageEl.textContent = sorteio.pct + '%';
+    progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated ' + sorteio.cor;
+    motivationalMessageEl.innerHTML = sorteio.msg;
 
-    document.getElementById("diagnosisTitle").textContent = summary;
-    document.getElementById("diagnosisSummary").textContent = insight;
-
-    document.getElementById("blockageFocus").textContent = "Bloqueo principal: " + blockage;
-    document.getElementById("currentVibration").textContent = "Actual " + current + "%";
-    document.getElementById("targetFrequency").textContent = "Objetivo " + target + "%";
-    document.getElementById("potentialGain").textContent = "+" + (target-current) + "%";
-
-    document.getElementById("blockageInsight").textContent = insight;
-
-    document.getElementById("vslText").innerHTML =
-        `Mira cómo eliminaron su <b>${blockage}</b> y activaron su abundancia.`;
-}
-
-generateDynamicResult();
+    setTimeout(function () {
+        progressBar.style.width = sorteio.pct + '%';
+    }, 100);
+};
+</script>
+</body>
+</html>
