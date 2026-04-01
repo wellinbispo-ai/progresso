@@ -3,26 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barra de Progreso Persuasiva</title>
+    <title>Barra de Progreso</title>
 
-    <!-- Bootstrap 5 -->
+    <!-- Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
             margin: 0;
-            padding: 10px;
+            padding: 20px;
             background-color: #f4f7f9;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
         }
 
         .progress-component-container {
             max-width: 500px;
             width: 100%;
+            margin: 80px auto;
         }
 
         .quiz-container {
@@ -59,13 +56,13 @@
             font-size: 18px;
             font-weight: bold;
             line-height: 38px;
-            transition: width 1.5s ease-out;
+            transition: width 1.2s ease;
         }
 
         .quiz-message {
             margin-top: 14px;
             font-size: 16px;
-            line-height: 1.45;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -83,9 +80,9 @@
         </div>
 
         <div class="progress">
-            <div
-                class="progress-bar progress-bar-striped progress-bar-animated"
+            <div 
                 id="flowProgress"
+                class="progress-bar progress-bar-striped progress-bar-animated"
                 style="width: 0%">
             </div>
         </div>
@@ -106,16 +103,15 @@ window.onload = function () {
     const motivationalMessageEl = document.getElementById('motivationalMessage');
 
     const TOTAL_STEPS = 4;
-    const CURRENT_STEP = 3; // 🔥 sempre etapa 3
+    const CURRENT_STEP = 3;
 
     function getRandom(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    function generateProgressStep3() {
+    function generateProgress() {
 
-        // 🔥 variação inteligente (não repete)
-        const percentage = getRandom(80, 87);
+        const percentage = getRandom(80, 87); // 🔥 variação inteligente
 
         progressBar.style.width = percentage + '%';
         progressPercentageEl.textContent = percentage + '%';
@@ -132,7 +128,7 @@ window.onload = function () {
         motivationalMessageEl.innerHTML = message;
     }
 
-    generateProgressStep3();
+    generateProgress();
 };
 </script>
 
