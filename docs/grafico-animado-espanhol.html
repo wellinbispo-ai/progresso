@@ -1,19 +1,21 @@
 <script>
-    const progressBar = document.getElementById('flowProgress');
-    const progressPercentageEl = document.getElementById('progressPercentage');
-    const progressValuesEl = document.getElementById('progressValues');
-    const motivationalMessageEl = document.getElementById('motivationalMessage');
-
-    const TOTAL_STEPS = 4;
-
-    // 👉 MUDE AQUI (2 ou 3 dependendo da etapa)
-    const CURRENT_STEP = 3;
+window.onload = function() {
 
     function getRandom(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     function setSmartProgress(step) {
+
+        const progressBar = document.getElementById('flowProgress');
+        const progressPercentageEl = document.getElementById('progressPercentage');
+        const progressValuesEl = document.getElementById('progressValues');
+        const motivationalMessageEl = document.getElementById('motivationalMessage');
+
+        if (!progressBar) {
+            console.log("ERRO: elemento não encontrado");
+            return;
+        }
 
         let percentage = 0;
         let message = '';
@@ -38,14 +40,15 @@
 
         progressBar.style.width = percentage + '%';
         progressPercentageEl.textContent = percentage + '%';
-        progressValuesEl.textContent = `Paso ${step} de ${TOTAL_STEPS}`;
+        progressValuesEl.textContent = `Paso ${step} de 4`;
 
         progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-info';
 
         motivationalMessageEl.innerHTML = message;
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        setSmartProgress(CURRENT_STEP);
-    });
+    // 👉 FORÇA EXECUÇÃO
+    setSmartProgress(3);
+
+};
 </script>
