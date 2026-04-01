@@ -1,282 +1,135 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnóstico Cuántico</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barra de Progreso</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-body{
-    background:linear-gradient(135deg,#667eea,#764ba2);
-    font-family:'Segoe UI',sans-serif;
-    padding:15px;
-}
+        .progress-component-container {
+            max-width: 500px;
+            width: 100%;
+            margin: 80px auto;
+        }
 
-.container{
-    max-width:720px;
-    background:#fff;
-    border-radius:16px;
-    padding:22px;
-    box-shadow:0 15px 40px rgba(0,0,0,.25);
-}
+        .quiz-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            color: white;
+        }
 
-.header h1{
-    color:#667eea;
-    font-size:1.6rem;
-    font-weight:800;
-    text-align:center;
-}
+        .quiz-title {
+            margin-bottom: 18px;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+        }
 
-.header p{
-    text-align:center;
-    font-size:.95rem;
-    color:#666;
-    margin-top:6px;
-}
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: 600;
+        }
 
-.score-display{
-    background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
-    border-radius:14px;
-    padding:18px;
-    margin:20px 0;
-    text-align:center;
-}
+        .progress {
+            height: 38px;
+            border-radius: 20px;
+            overflow: hidden;
+            background-color: rgba(255,255,255,0.3);
+        }
 
-.score-number{
-    font-size:3.2rem;
-    font-weight:900;
-    color:#667eea;
-}
+        .progress-bar {
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 38px;
+            transition: width 1.2s ease;
+        }
 
-.score-label{
-    font-size:.9rem;
-    color:#555;
-}
-
-.status-badge{
-    display:block;
-    margin:15px auto;
-    padding:10px 22px;
-    border-radius:40px;
-    font-weight:700;
-    color:#fff;
-    text-align:center;
-    width:fit-content;
-}
-
-.diagnosis{
-    background:#f8f9fa;
-    border-left:4px solid #667eea;
-    padding:18px;
-    border-radius:10px;
-    margin-top:20px;
-}
-
-.diagnosis h4{
-    font-size:1.1rem;
-    font-weight:800;
-    color:#667eea;
-    margin-bottom:10px;
-}
-
-.diagnosis p{
-    font-size:.95rem;
-    color:#444;
-}
-
-.improvement-item{
-    background:#fff;
-    border-left:4px solid #ffc107;
-    padding:16px;
-    margin-top:20px;
-    border-radius:10px;
-    box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
-
-.subject-name{
-    font-weight:800;
-    color:#ffc107;
-    font-size:1rem;
-}
-
-.potential-bar{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    font-size:.85rem;
-    margin:10px 0;
-    font-weight:700;
-}
-
-.current{color:#dc3545}
-.arrow{color:#667eea}
-.target{color:#28a745}
-
-.gain{
-    background:#d4edda;
-    color:#155724;
-    padding:4px 8px;
-    border-radius:6px;
-    font-size:.8rem;
-}
-
-.insight{
-    font-size:.9rem;
-    color:#555;
-    border-left:3px solid #ffc107;
-    padding-left:10px;
-    margin-top:10px;
-}
-
-.summary-box{
-    background:linear-gradient(135deg,#667eea,#764ba2);
-    color:#fff;
-    padding:18px;
-    border-radius:12px;
-    margin-top:25px;
-    text-align:center;
-    font-size:.95rem;
-}
-
-.vsl-transition-box{
-    background:linear-gradient(135deg,#667eea,#764ba2);
-    color:#fff;
-    padding:24px;
-    border-radius:14px;
-    text-align:center;
-    margin-top:25px;
-}
-
-.vsl-transition-box h3{
-    font-size:1.3rem;
-    font-weight:800;
-}
-
-.vsl-transition-box p{
-    font-size:.95rem;
-}
-
-.vsl-visual-button{
-    background:#28a745;
-    padding:14px 26px;
-    border-radius:50px;
-    font-size:1.05rem;
-    font-weight:800;
-    display:inline-block;
-    margin-top:15px;
-    box-shadow:0 8px 20px rgba(0,0,0,.3);
-    animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-    0%,100%{transform:scale(1)}
-    50%{transform:scale(1.04)}
-}
-</style>
+        .quiz-message {
+            margin-top: 14px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="progress-component-container">
+    <div class="quiz-container">
 
-    <div class="header">
-        <h1>Diagnóstico de Frecuencia Financiera</h1>
-        <p id="headerSubtitle"></p>
-    </div>
+        <div class="quiz-title">🚀 ¡Tu progreso en el flujo!</div>
 
-    <div class="score-display">
-        <div class="score-number" id="scoreNumber">0</div>
-        <div class="score-label">Nivel de Alineación</div>
-    </div>
-
-    <div class="status-badge" id="statusBadge"></div>
-
-    <div class="diagnosis">
-        <h4 id="diagnosisTitle"></h4>
-        <p id="diagnosisSummary"></p>
-    </div>
-
-    <div class="improvement-item">
-        <div class="subject-name" id="blockageFocus"></div>
-        <div class="potential-bar">
-            <span class="current" id="currentVibration"></span>
-            <span class="arrow">→</span>
-            <span class="target" id="targetFrequency"></span>
-            <span class="gain" id="potentialGain"></span>
+        <div class="progress-stats">
+            <span id="progressValues"></span>
+            <span id="progressPercentage"></span>
         </div>
-        <div class="insight" id="blockageInsight"></div>
-    </div>
 
-    <div class="summary-box">
-        ✅ Tienes el potencial<br>
-        ❓ Falta el método exacto<br>
-        ⚡ Resultados en menos de 30 días
-    </div>
+        <div class="progress">
+            <div 
+                id="flowProgress"
+                class="progress-bar progress-bar-striped progress-bar-animated"
+                style="width: 0%">
+            </div>
+        </div>
 
-    <div class="vsl-transition-box">
-        <h3>El Protocolo que elimina tu bloqueo</h3>
-        <p id="vslText"></p>
-        <div class="vsl-visual-button">🎥 Mira el siguiente video</div>
-    </div>
+        <div class="quiz-message" id="motivationalMessage">
+            Cargando tu progreso...
+        </div>
 
+    </div>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
+window.onload = function () {
 
-    function generateDynamicResult(){
-        const score=Math.floor(Math.random()*100);
-        let blockage,summary,insight,current,target,status,color;
+    const progressBar = document.getElementById('flowProgress');
+    const progressPercentageEl = document.getElementById('progressPercentage');
+    const progressValuesEl = document.getElementById('progressValues');
+    const motivationalMessageEl = document.getElementById('motivationalMessage');
 
-        if(score<30){
-            blockage="Miedo al Éxito";
-            summary="Bloqueo crítico detectado.";
-            insight="Tu subconsciente rechaza la abundancia.";
-            current=15;target=95;status="ALERTA";color="bg-danger";
-        }else if(score<60){
-            blockage="Patrones de Deuda";
-            summary="Estancamiento energético.";
-            insight="Necesitas romper el patrón.";
-            current=40;target=85;status="ESTANCADO";color="bg-warning";
-        }else if(score<85){
-            blockage="Fugas de Energía";
-            summary="Potencial latente.";
-            insight="Ajuste preciso necesario.";
-            current=70;target=90;status="OPORTUNIDAD";color="bg-info";
-        }else{
-            blockage="Expansión Limitada";
-            summary="Alta alineación.";
-            insight="Momento de escalar.";
-            current=85;target=99;status="MAESTRÍA";color="bg-success";
-        }
+    const TOTAL_STEPS = 4;
+    const CURRENT_STEP = 3;
 
-        document.getElementById("scoreNumber").textContent=score;
-        document.getElementById("headerSubtitle").textContent=summary;
-
-        const badge=document.getElementById("statusBadge");
-        badge.textContent=status;
-        badge.className="status-badge "+color;
-
-        document.getElementById("diagnosisTitle").textContent=summary;
-        document.getElementById("diagnosisSummary").textContent=insight;
-
-        document.getElementById("blockageFocus").textContent="Bloqueo principal: "+blockage;
-        document.getElementById("currentVibration").textContent="Actual "+current+"%";
-        document.getElementById("targetFrequency").textContent="Objetivo "+target+"%";
-        document.getElementById("potentialGain").textContent="+"+(target-current)+"%";
-
-        document.getElementById("blockageInsight").textContent=insight;
-
-        document.getElementById("vslText").innerHTML =
-            `Mira cómo eliminaron su <b>${blockage}</b> y activaron su abundancia.`;
+    function getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    generateDynamicResult();
-});
+    function generateProgress() {
+
+        const percentage = getRandom(80, 87); // 🔥 variação inteligente
+
+        progressBar.style.width = percentage + '%';
+        progressPercentageEl.textContent = percentage + '%';
+        progressValuesEl.textContent = `Paso ${CURRENT_STEP} de ${TOTAL_STEPS}`;
+
+        progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-warning';
+
+        const message = `
+            🔥 <strong>¡Ya casi terminas!</strong><br>
+            Alcanzaste el ${percentage}% del proceso.<br>
+            <strong>Falta solo 1 paso para ver tu resultado.</strong>
+        `;
+
+        motivationalMessageEl.innerHTML = message;
+    }
+
+    generateProgress();
+};
 </script>
 
 </body>
