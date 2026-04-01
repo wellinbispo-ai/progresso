@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tu Diagnóstico · La Hija Cuidadora</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;min-height:100vh;font-family:'DM Sans',sans-serif;background:#fff;color:#1a1a1a;font-size:16px}
+
+.hero{padding:28px 20px 22px;text-align:center;border-bottom:1px solid #f0ede8}
+.eyebrow{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#aaa;margin-bottom:10px}
+.hero h1{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;line-height:1.25;color:#1a1a1a;margin-bottom:8px}
+.hero-sub{font-size:14px;color:#777;line-height:1.5}
+
+.gauge-block{padding:24px 20px 16px;text-align:center;border-bottom:1px solid #f0ede8}
+.gauge-label-top{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:12px}
+.gauge-canvas-wrap{position:relative;height:160px;display:flex;align-items:flex-end;justify-content:center}
+.gauge-canvas-wrap canvas{max-width:280px;width:100%}
+.gauge-center-text{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);text-align:center;pointer-events:none}
+.gauge-number{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;line-height:1;transition:color .3s}
+.gauge-sublabel{font-size:11px;color:#aaa;margin-top:2px;white-space:nowrap}
+.badge{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.8px;text-transform:uppercase;padding:7px 18px;border-radius:99px;margin-top:14px}
+
+.section{padding:22px 20px;border-bottom:1px solid #f0ede8}
+.section-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:12px}
+.cycle-name{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:#1a1a1a;line-height:1.25;margin-bottom:10px}
+.cycle-desc{font-size:15px;color:#555;line-height:1.65}
+
+.signal{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #f6f4f1}
+.signal:last-child{border:none;padding-bottom:0}
+.signal:first-child{padding-top:0}
+.sig-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:7px}
+.sig-title{font-size:15px;font-weight:500;color:#1a1a1a;margin-bottom:3px}
+.sig-detail{font-size:14px;color:#666;line-height:1.55}
+
+/* BARRAS DOR + ESPERANÇA */
+.potential-block{padding:22px 20px;border-bottom:1px solid #f0ede8}
+.potential-item{margin-bottom:20px}
+.potential-item:last-child{margin-bottom:0}
+.pot-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.pot-title{font-size:14px;font-weight:500;color:#1a1a1a}
+.pot-gain{font-size:12px;font-weight:500;padding:3px 10px;border-radius:99px}
+.dual-bar-wrap{position:relative;width:100%;height:14px;border-radius:99px;background:#f0ede8;overflow:hidden;margin-bottom:6px}
+.dual-bar-red{position:absolute;left:0;top:0;height:100%;border-radius:99px 0 0 99px;transition:width 1.3s cubic-bezier(.4,0,.2,1)}
+.dual-bar-green{position:absolute;left:0;top:0;height:100%;border-radius:99px;transition:width 1.5s cubic-bezier(.4,0,.2,1) .1s;opacity:.35}
+.pot-labels{display:flex;justify-content:space-between;font-size:11px}
+.pot-label-bad{color:#C0392B;font-weight:500}
+.pot-label-good{color:#117A65;font-weight:500}
+.pot-legend{display:flex;gap:14px;margin-bottom:14px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#999}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+.quote-block{padding:20px;border-bottom:1px solid #f0ede8}
+.quote-inner{border-radius:14px;padding:18px 20px}
+.quote-text{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;line-height:1.6}
+
+.bridge{padding:22px 20px;border-bottom:1px solid #f0ede8}
+.bridge p{font-size:15px;color:#555;line-height:1.7;margin-bottom:12px}
+.bridge p:last-child{margin:0}
+.bridge strong{color:#1a1a1a;font-weight:500}
+
+.cta-block{padding:24px 20px 44px;text-align:center}
+.cta-btn{width:100%;padding:20px 24px;border-radius:16px;border:none;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;color:#fff;cursor:pointer;line-height:1.35;margin-bottom:10px;animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 6px 24px rgba(0,0,0,.18)}50%{transform:scale(1.02);box-shadow:0 10px 32px rgba(0,0,0,.24)}}
+.cta-micro{font-size:12px;color:#bbb;letter-spacing:.5px}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">Tu diagnóstico personalizado</div>
+  <h1>La Supervivencia<br>de la Hija Cuidadora</h1>
+  <p class="hero-sub" id="hdr-sub"></p>
+</div>
+
+<div class="gauge-block">
+  <div class="gauge-label-top">Nivel de desgaste emocional detectado</div>
+  <div class="gauge-canvas-wrap">
+    <canvas id="gaugeChart"></canvas>
+    <div class="gauge-center-text">
+      <div class="gauge-number" id="gauge-num">0%</div>
+      <div class="gauge-sublabel" id="gauge-sub"></div>
+    </div>
+  </div>
+  <span class="badge" id="badge"></span>
+</div>
+
+<div class="section">
+  <div class="section-label">Lo que encontramos</div>
+  <div class="cycle-name" id="cycle-name"></div>
+  <p class="cycle-desc" id="cycle-desc"></p>
+</div>
+
+<div class="section">
+  <div class="section-label">Señales en tus respuestas</div>
+  <div id="signals"></div>
+</div>
+
+<div class="potential-block">
+  <div class="section-label" style="margin-bottom:6px">Lo que puedes recuperar con el método correcto</div>
+  <div class="pot-legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#C0392B"></div>Hoy (agotamiento)</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#117A65;opacity:.6"></div>Tu potencial</div>
+  </div>
+  <div id="potentials"></div>
+</div>
+
+<div class="quote-block">
+  <div class="quote-inner" id="quote-inner">
+    <p class="quote-text" id="quote-text"></p>
+  </div>
+</div>
+
+<div class="bridge">
+  <p id="bridge1"></p>
+  <p id="bridge2"></p>
+</div>
+
+<div class="cta-block">
+  <button class="cta-btn" id="cta-btn"><span id="cta-text"></span></button>
+  <p class="cta-micro" id="cta-micro"></p>
+</div>
+
+<script>
+const V=[
+  {
+    pct:87,color:"#C0392B",
+    badgeBg:"#FDECEA",badgeColor:"#922B21",
+    badge:"Alerta roja · Agotamiento crítico",
+    hdrSub:"Tus respuestas revelan algo urgente que necesitas ver",
+    gaugeSub:"Riesgo muy alto",
+    cycleName:"El Ciclo del Agotamiento Invisible",
+    cycleDesc:"Estás cargando un peso que no deberías cargar sola. No porque seas débil — sino porque nadie te enseñó a hacerlo diferente. Y eso tiene solución.",
+    signals:[
+      {label:"Tu cuerpo está avisando",detail:"El cansancio que sientes no desaparece solo con dormir. Es agotamiento emocional acumulado — y tiene raíz."},
+      {label:"El miedo te roba el descanso",detail:"Esa angustia de cometer un error al cuidar a tu ser querido te persigue incluso de noche."},
+      {label:"Tú misma quedaste en pausa",detail:"Has postergado tus necesidades creyendo que eso es amor. Pero la cuidadora agotada no puede cuidar bien."}
+    ],
+    potentials:[
+      {label:"Gestión del agotamiento emocional",bad:87,good:85},
+      {label:"Seguridad en el cuidado diario",   bad:80,good:90},
+      {label:"Tiempo y espacio para ti",          bad:90,good:80}
+    ],
+    quoteBg:"#FDECEA",quoteColor:"#922B21",
+    quote:"\"Llevas demasiado tiempo en modo emergencia. Lo que necesitas no es más esfuerzo — es el método correcto.\"",
+    b1:"Hay una salida de este ciclo. Y <strong>no requiere que te sacrifiques más</strong> ni que tengas más horas libres.",
+    b2:"Antes de que sigas, hay algo que quiero mostrarte. Solo un momento — puede ser exactamente lo que estabas buscando sin saberlo.",
+    cta:"Espera — hay algo que puede resolver lo que estás viviendo",
+    micro:"Muchas cuidadoras ya encontraron su salida · Tú también puedes"
+  },
+  {
+    pct:65,color:"#B7770D",
+    badgeBg:"#FEF3DC",badgeColor:"#7D5A0D",
+    badge:"Zona de riesgo · Desgaste acumulado",
+    hdrSub:"Tus respuestas muestran algo que no puedes ignorar más",
+    gaugeSub:"Patrón silencioso en progreso",
+    cycleName:"La Trampa de la Culpa Silenciosa",
+    cycleDesc:"Actúas desde el miedo a fallar, no desde el amor. Esa diferencia parece pequeña — pero es lo que hace que cada día pese más que el anterior.",
+    signals:[
+      {label:"La culpa como motor — y eso agota",detail:"Cuando cuidas por miedo al qué dirán, el desgaste se multiplica sin que te des cuenta."},
+      {label:"Tu identidad quedó en pausa",detail:"Las cosas que antes te daban alegría dejaron de existir. La 'cuidadora' absorbió todo lo demás."},
+      {label:"Alerta constante, sin descanso real",detail:"Tu mente no para ni cuando tu cuerpo descansa. Eso tiene nombre — y tiene solución."}
+    ],
+    potentials:[
+      {label:"Liberar la culpa que no te pertenece",bad:65,good:85},
+      {label:"Reconectar contigo misma",            bad:70,good:88},
+      {label:"Cuidar desde el amor, no el miedo",   bad:60,good:92}
+    ],
+    quoteBg:"#FEF3DC",quoteColor:"#7D5A0D",
+    quote:"\"Lo que sientes no es debilidad. Es el resultado lógico de cuidar sin herramientas y sin nadie que te cuide a ti.\"",
+    b1:"No necesitas más fuerza de voluntad. Necesitas <strong>un sistema que funcione contigo, no en tu contra</strong>.",
+    b2:"Antes de cerrar esta página, quiero mostrarte algo que puede cambiar el punto de partida de todo.",
+    cta:"Espera — esto puede ser exactamente lo que necesitas ahora",
+    micro:"Un método que ya está funcionando · Sin sacrificios extras"
+  },
+  {
+    pct:48,color:"#117A65",
+    badgeBg:"#D5F5E3",badgeColor:"#0E6655",
+    badge:"Zona de oportunidad · Ajuste preciso",
+    hdrSub:"Estás más cerca de la solución de lo que imaginas",
+    gaugeSub:"Potencial real disponible",
+    cycleName:"El Límite del Cuidador Funcional",
+    cycleDesc:"Logras sostener la rutina — pero a un costo silencioso. Funcionas hacia afuera mientras por dentro algo se va apagando. Eso todavía se puede revertir.",
+    signals:[
+      {label:"Todo depende solo de ti",detail:"Si tú fallas, el sistema falla. Eso no es sostenible — y en el fondo, ya lo sabes."},
+      {label:"Pedir ayuda se siente como fallar",detail:"Crees que delegar es rendirse o que nadie lo hará tan bien. Esa creencia te aísla."},
+      {label:"Cuidas, pero ya no estás del todo",detail:"A veces vas en piloto automático. Y eso genera más culpa. Es un círculo que se puede romper."}
+    ],
+    potentials:[
+      {label:"Construir una red de apoyo real", bad:48,good:88},
+      {label:"Delegar sin culpa",               bad:42,good:85},
+      {label:"Presencia plena mientras cuidas", bad:50,good:90}
+    ],
+    quoteBg:"#D5F5E3",quoteColor:"#0E6655",
+    quote:"\"Tienes la fuerza. Lo que falta es el método. Y eso se aprende más rápido de lo que crees.\"",
+    b1:"Estás <strong>más cerca de lo que imaginas</strong> de un sistema que funcione sin agotarte ni alejarte de quien amas.",
+    b2:"Antes de seguir con tu día, hay algo que quiero que veas. Solo unos minutos — y entenderás exactamente qué cambiar primero.",
+    cta:"Espera un momento — esto puede resolver lo que estás viviendo",
+    micro:"Sin compromiso · Solo lo que realmente puede ayudarte"
+  }
+];
+
+(function(){
+  const v=V[Math.floor(Math.random()*V.length)];
+
+  document.getElementById('hdr-sub').textContent    = v.hdrSub;
+  document.getElementById('cycle-name').textContent = v.cycleName;
+  document.getElementById('cycle-desc').textContent = v.cycleDesc;
+  document.getElementById('bridge1').innerHTML      = v.b1;
+  document.getElementById('bridge2').innerHTML      = v.b2;
+  document.getElementById('cta-text').textContent   = v.cta;
+  document.getElementById('cta-micro').textContent  = v.micro;
+  document.getElementById('quote-text').textContent = v.quote;
+  document.getElementById('gauge-sub').textContent  = v.gaugeSub;
+
+  const badge=document.getElementById('badge');
+  badge.textContent=v.badge;
+  badge.style.background=v.badgeBg;
+  badge.style.color=v.badgeColor;
+
+  document.getElementById('quote-inner').style.background=v.quoteBg;
+  document.getElementById('quote-text').style.color=v.quoteColor;
+  document.getElementById('cta-btn').style.background=v.color;
+
+  const numEl=document.getElementById('gauge-num');
+  numEl.style.color=v.color;
+
+  // GAUGE
+  const gaugeCtx=document.getElementById('gaugeChart').getContext('2d');
+  const gaugeChart=new Chart(gaugeCtx,{
+    type:'doughnut',
+    data:{datasets:[{data:[0,100],backgroundColor:[v.color,'#f0ede8'],borderWidth:0,borderRadius:4}]},
+    options:{circumference:180,rotation:270,cutout:'78%',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}}}
+  });
+
+  setTimeout(()=>{
+    let cur=0,step=Math.ceil(v.pct/50);
+    const t=setInterval(()=>{
+      cur=Math.min(cur+step,v.pct);
+      numEl.textContent=cur+'%';
+      gaugeChart.data.datasets[0].data=[cur,100-cur];
+      gaugeChart.update('none');
+      if(cur>=v.pct) clearInterval(t);
+    },28);
+  },400);
+
+  // SIGNALS
+  const sigList=document.getElementById('signals');
+  v.signals.forEach(s=>{
+    const d=document.createElement('div');
+    d.className='signal';
+    d.innerHTML=`<div class="sig-dot" style="background:${v.color}"></div><div><div class="sig-title">${s.label}</div><div class="sig-detail">${s.detail}</div></div>`;
+    sigList.appendChild(d);
+  });
+
+  // BARRAS DOR + ESPERANÇA
+  const potList=document.getElementById('potentials');
+  v.potentials.forEach((p,i)=>{
+    const gain=p.good-p.bad;
+    const div=document.createElement('div');
+    div.className='potential-item';
+    const uid='pb'+i;
+    div.innerHTML=`
+      <div class="pot-header">
+        <span class="pot-title">${p.label}</span>
+        <span class="pot-gain" style="background:#D5F5E3;color:#0E6655">+${gain}% potencial</span>
+      </div>
+      <div class="dual-bar-wrap">
+        <div class="dual-bar-green" id="${uid}g" style="width:0%"></div>
+        <div class="dual-bar-red"   id="${uid}r" style="width:0%"></div>
+      </div>
+      <div class="pot-labels">
+        <span class="pot-label-bad">Hoy: ${p.bad}% agotada</span>
+        <span class="pot-label-good">Potencial: ${p.good}%</span>
+      </div>`;
+    potList.appendChild(div);
+  });
+
+  // anima barras
+  setTimeout(()=>{
+    v.potentials.forEach((p,i)=>{
+      const uid='pb'+i;
+      const gr=document.getElementById(uid+'g');
+      const rd=document.getElementById(uid+'r');
+      if(gr){ gr.style.background='#117A65'; gr.style.width=p.good+'%'; }
+      if(rd){ rd.style.background='#C0392B'; rd.style.width=p.bad+'%'; }
+    });
+  },700);
+
+  // confete suave
+  setTimeout(()=>{
+    const end=Date.now()+2000;
+    (function frame(){
+      confetti({particleCount:2,angle:60,spread:50,origin:{x:0},colors:[v.color,'#f5c6b0','#fff']});
+      confetti({particleCount:2,angle:120,spread:50,origin:{x:1},colors:[v.color,'#f5c6b0','#fff']});
+      if(Date.now()<end) requestAnimationFrame(frame);
+    })();
+  },600);
+
+})();
+</script>
+</body>
+</html>
