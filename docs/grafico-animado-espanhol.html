@@ -1,165 +1,51 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barra de Progreso Persuasiva</title>
+<script>
+    const progressBar = document.getElementById('flowProgress');
+    const progressPercentageEl = document.getElementById('progressPercentage');
+    const progressValuesEl = document.getElementById('progressValues');
+    const motivationalMessageEl = document.getElementById('motivationalMessage');
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    const TOTAL_STEPS = 4;
 
-    <style>
-        body {
-            margin: 0;
-            padding: 10px;
-            background-color: #f4f7f9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+    // 👉 MUDE AQUI (2 ou 3 dependendo da etapa)
+    const CURRENT_STEP = 3;
+
+    function getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function setSmartProgress(step) {
+
+        let percentage = 0;
+        let message = '';
+
+        if (step === 2) {
+            percentage = getRandom(68, 75);
+
+            message = `
+                ⚡ <strong>Você já passou da metade!</strong><br>
+                Continue... seu resultado já está sendo preparado.
+            `;
         }
 
-        .progress-component-container {
-            max-width: 500px;
-            width: 100%;
+        if (step === 3) {
+            percentage = getRandom(80, 87);
+
+            message = `
+                🔥 <strong>Falta só 1 passo!</strong><br>
+                Finalize agora para desbloquear seu resultado completo.
+            `;
         }
 
-        .quiz-container {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 22px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            color: white;
-        }
+        progressBar.style.width = percentage + '%';
+        progressPercentageEl.textContent = percentage + '%';
+        progressValuesEl.textContent = `Paso ${step} de ${TOTAL_STEPS}`;
 
-        .quiz-title {
-            margin-bottom: 18px;
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
+        progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-info';
 
-        .progress-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 15px;
-            font-weight: 600;
-        }
+        motivationalMessageEl.innerHTML = message;
+    }
 
-        .progress {
-            height: 38px;
-            border-radius: 20px;
-            overflow: hidden;
-            background-color: rgba(255,255,255,0.3);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .progress-bar {
-            font-size: 18px;
-            font-weight: bold;
-            line-height: 38px;
-            transition: width 1.5s ease-out, background-color 0.6s ease;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-
-        /* TEXTO ABAIXO DA BARRA (CORRIGIDO) */
-        .quiz-message {
-            margin-top: 14px;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 1.45;
-            text-align: left;
-            display: block;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="progress-component-container">
-        <div class="quiz-container">
-
-            <div class="quiz-title">🚀 ¡Tu progreso en el flujo!</div>
-
-            <div class="progress-stats">
-                <span id="progressValues"></span>
-                <span id="progressPercentage"></span>
-            </div>
-
-            <div class="progress">
-                <div
-                    class="progress-bar progress-bar-striped progress-bar-animated"
-                    role="progressbar"
-                    id="flowProgress"
-                    style="width: 0%">
-                </div>
-            </div>
-
-            <div class="quiz-message" id="motivationalMessage">
-                Cargando tu progreso...
-            </div>
-
-        </div>
-    </div>
-
-    <script>
-        const progressBar = document.getElementById('flowProgress');
-        const progressPercentageEl = document.getElementById('progressPercentage');
-        const progressValuesEl = document.getElementById('progressValues');
-        const motivationalMessageEl = document.getElementById('motivationalMessage');
-
-        // Configuración
-        const TOTAL_STEPS = 4;
-        const MIN_PERCENTAGE = 65;
-        const MAX_PERCENTAGE = 87;
-
-        function generateRandomProgress() {
-            // Porcentaje aleatorio entre 65% y 87%
-            const percentage = Math.floor(
-                Math.random() * (MAX_PERCENTAGE - MIN_PERCENTAGE + 1)
-            ) + MIN_PERCENTAGE;
-
-            const currentStep = Math.min(
-                TOTAL_STEPS - 1,
-                Math.ceil((percentage / 100) * TOTAL_STEPS)
-            );
-
-            progressBar.style.width = percentage + '%';
-            progressPercentageEl.textContent = percentage + '%';
-            progressValuesEl.textContent = `Paso ${currentStep} de ${TOTAL_STEPS}`;
-
-            progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated';
-
-            let message = '';
-
-            if (percentage < 75) {
-                progressBar.classList.add('bg-warning');
-                message = `
-                    🔥 <strong>Estás muy cerca de finalizar.</strong><br>
-                    Tu progreso del ${percentage}% indica que ya hiciste lo más difícil.
-                    <strong>Continúa el flujo y asegura tu resultado.</strong>
-                `;
-            } else {
-                progressBar.classList.add('bg-info');
-                message = `
-                    🎯 <strong>¡Casi completado!</strong><br>
-                    Alcanzaste el ${percentage}% del proceso.
-                    <strong>Finaliza ahora y desbloquea lo que preparamos para ti.</strong>
-                `;
-            }
-
-            motivationalMessageEl.innerHTML = message;
-        }
-
-        document.addEventListener('DOMContentLoaded', generateRandomProgress);
-    </script>
-
-</body>
-</html>
-
-
+    document.addEventListener('DOMContentLoaded', () => {
+        setSmartProgress(CURRENT_STEP);
+    });
+</script>
