@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
-<title>Diagnóstico Express · La Hija Cuidadora</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Diagnóstico Express</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
-background:#fff;
-color:#1a1a1a;
+background:#ffffff;
 font-family:'DM Sans',sans-serif;
-overflow-x:hidden;
+color:#1a1a1a;
 }
 
 .wrap{
 max-width:520px;
 margin:auto;
-padding:24px 18px 50px;
+padding:24px 18px 40px;
 }
 
 .eyebrow{
+text-align:center;
 font-size:11px;
 letter-spacing:2px;
 text-transform:uppercase;
 color:#999;
-text-align:center;
 margin-bottom:10px;
 }
 
 h1{
 font-family:'Playfair Display',serif;
-font-size:32px;
-line-height:1.18;
+font-size:30px;
+line-height:1.15;
 text-align:center;
 margin-bottom:12px;
 }
@@ -41,9 +45,9 @@ margin-bottom:12px;
 .sub{
 text-align:center;
 font-size:15px;
-color:#666;
 line-height:1.6;
-margin-bottom:26px;
+color:#666;
+margin-bottom:22px;
 }
 
 .card{
@@ -51,36 +55,32 @@ background:#faf8f5;
 border:1px solid #eee7de;
 border-radius:18px;
 padding:22px;
-margin-bottom:18px;
-box-shadow:0 8px 20px rgba(0,0,0,.04);
+margin-bottom:16px;
+box-shadow:0 8px 18px rgba(0,0,0,.04);
 }
 
 .center{text-align:center}
 
-.gauge-wrap{
-margin-bottom:10px;
-}
-
 .gauge{
-width:160px;
-height:160px;
+width:170px;
+height:170px;
 margin:auto;
 border-radius:50%;
+position:relative;
 display:flex;
 align-items:center;
 justify-content:center;
-position:relative;
-background:conic-gradient(#117A65 0deg,#e9e5df 0deg);
+background:conic-gradient(#117A65 0deg,#ece8e2 0deg);
 transition:all .6s ease;
 }
 
 .gauge::before{
 content:"";
 position:absolute;
-width:118px;
-height:118px;
-background:#fff;
+width:126px;
+height:126px;
 border-radius:50%;
+background:#fff;
 }
 
 .gauge-inner{
@@ -91,11 +91,11 @@ text-align:center;
 
 .percent{
 font-family:'Playfair Display',serif;
-font-size:38px;
+font-size:42px;
 line-height:1;
 }
 
-.small{
+.percent-sub{
 font-size:12px;
 color:#888;
 margin-top:4px;
@@ -110,18 +110,18 @@ font-size:12px;
 font-weight:700;
 }
 
-.block-title{
-font-size:12px;
+.label{
+font-size:11px;
 letter-spacing:2px;
 text-transform:uppercase;
 color:#999;
-margin-bottom:12px;
+margin-bottom:10px;
 }
 
 .big{
 font-family:'Playfair Display',serif;
-font-size:26px;
-line-height:1.25;
+font-size:25px;
+line-height:1.2;
 margin-bottom:10px;
 }
 
@@ -132,47 +132,48 @@ color:#555;
 }
 
 .signal{
-padding:14px 0;
+padding:12px 0;
 border-bottom:1px solid #ece8e2;
 }
 
-.signal:last-child{border:none;padding-bottom:0}
+.signal:last-child{
+border:none;
+padding-bottom:0;
+}
 
-.signal-title{
-font-weight:700;
+.signal strong{
+display:block;
 font-size:15px;
+color:#1a1a1a;
 margin-bottom:4px;
 }
 
-.signal-desc{
+.signal span{
 font-size:14px;
 line-height:1.55;
 color:#666;
+display:block;
 }
 
-.reveal{
-opacity:0;
-transform:translateY(18px);
-transition:.7s ease;
+.highlight{
+font-weight:700;
+color:#1a1a1a;
 }
 
-.reveal.show{
-opacity:1;
-transform:none;
-}
-
-.btn{
+.fake-btn{
 width:100%;
-border:none;
 padding:18px 20px;
 border-radius:16px;
 font-size:17px;
 font-weight:700;
-cursor:pointer;
+text-align:center;
 color:#fff;
-margin-top:14px;
+margin-top:16px;
 animation:pulse 2s infinite;
-box-shadow:0 10px 24px rgba(0,0,0,.14);
+box-shadow:0 10px 24px rgba(0,0,0,.15);
+cursor:default;
+user-select:none;
+pointer-events:none;
 }
 
 @keyframes pulse{
@@ -188,12 +189,31 @@ margin-top:10px;
 line-height:1.5;
 }
 
+.reveal{
+opacity:0;
+transform:translateY(18px);
+transition:.7s ease;
+}
+
+.reveal.show{
+opacity:1;
+transform:none;
+}
+
+.loading{
+text-align:center;
+font-size:14px;
+color:#777;
+margin-bottom:16px;
+min-height:18px;
+}
+
 .progress{
 height:7px;
 background:#ece8e2;
 border-radius:999px;
 overflow:hidden;
-margin-bottom:18px;
+margin-bottom:16px;
 }
 
 .bar{
@@ -202,15 +222,6 @@ width:0%;
 background:#117A65;
 transition:width 1s ease;
 }
-
-.loading{
-font-size:14px;
-text-align:center;
-color:#777;
-margin-bottom:18px;
-min-height:20px;
-}
-
 </style>
 </head>
 <body>
@@ -220,49 +231,50 @@ min-height:20px;
 <div class="progress"><div class="bar" id="bar"></div></div>
 <div class="loading" id="loading">Analizando tus respuestas...</div>
 
-<div class="reveal" id="hero">
+<div class="reveal">
 <div class="eyebrow">Tu diagnóstico personalizado</div>
 <h1>La Supervivencia<br>de la Hija Cuidadora</h1>
 <p class="sub" id="sub"></p>
 </div>
 
-<div class="card center reveal" id="gaugeCard">
-<div class="gauge-wrap">
+<div class="card center reveal">
 <div class="gauge" id="gauge">
 <div class="gauge-inner">
 <div class="percent" id="pct">0%</div>
-<div class="small">Nivel detectado</div>
+<div class="percent-sub">Nivel detectado</div>
 </div>
 </div>
-</div>
+
 <div class="badge" id="badge"></div>
 </div>
 
-<div class="card reveal" id="found">
-<div class="block-title">Lo que encontramos</div>
+<div class="card reveal">
+<div class="label">Lo que encontramos</div>
 <div class="big" id="title"></div>
 <div class="txt" id="desc"></div>
 </div>
 
-<div class="card reveal" id="signalsBox">
-<div class="block-title">Señales en tus respuestas</div>
+<div class="card reveal">
+<div class="label">Señales en tus respuestas</div>
 <div id="signals"></div>
 </div>
 
-<div class="card reveal" id="bridge">
-<div class="txt" id="bridgeText"></div>
+<div class="card reveal">
+<div class="txt" id="bridge"></div>
 
-<button class="btn" id="cta">▶ Ver el video ahora</button>
+<div class="fake-btn" id="btn">
+🔓 Sí, quiero ver qué debo cambiar
+</div>
 
 <div class="micro">
-Solo toma 2 minutos · Puede cambiar cómo vives el cuidado desde hoy
+El siguiente paso puede cambiar cómo vives el cuidado
 </div>
 </div>
 
 </div>
 
 <script>
-const variants = [
+const data = [
 {
 pct:87,
 color:"#C0392B",
@@ -271,13 +283,13 @@ badgeColor:"#922B21",
 badge:"Alerta roja · Agotamiento crítico",
 sub:"Tus respuestas revelan algo urgente que necesitas ver.",
 title:"El Ciclo del Agotamiento Invisible",
-desc:"Has sostenido demasiado sola durante demasiado tiempo. No estás fallando: estás sobrecargada.",
+desc:"Has sostenido demasiado sola durante demasiado tiempo. <span class='highlight'>No estás fallando:</span> estás sobrecargada.",
 signals:[
 ["Tu cuerpo está avisando","El cansancio ya no se resuelve solo descansando."],
 ["Vives en alerta","Tu mente sigue trabajando incluso de noche."],
 ["Te olvidaste de ti","Tus necesidades quedaron en pausa."]
 ],
-bridge:"Lo que sientes tiene solución. Mira este breve video y descubre qué cambiar primero."
+bridge:"Lo que sientes <span class='highlight'>sí tiene solución</span>. En el siguiente paso descubrirás qué cambiar primero."
 },
 {
 pct:65,
@@ -290,10 +302,10 @@ title:"La Trampa de la Culpa Silenciosa",
 desc:"Cuidas desde la responsabilidad, pero eso te está drenando por dentro.",
 signals:[
 ["La culpa te mueve","Y eso agota más de lo que imaginas."],
-["Tu identidad se apagó","Todo gira alrededor del cuidado."],
+["Tu identidad quedó atrás","Todo gira alrededor del cuidado."],
 ["No descansas de verdad","Tu mente nunca desconecta."]
 ],
-bridge:"No necesitas más fuerza. Necesitas método. Mira esto ahora."
+bridge:"No necesitas más fuerza. <span class='highlight'>Necesitas método.</span> Y estás a punto de verlo."
 },
 {
 pct:48,
@@ -309,11 +321,11 @@ signals:[
 ["Pedir ayuda pesa","Delegar te hace sentir culpa."],
 ["Vas en automático","Y eso también desgasta."]
 ],
-bridge:"Todavía es reversible. Mira este video y entiende qué hacer primero."
+bridge:"Todavía se puede revertir. <span class='highlight'>Lo siguiente puede ayudarte mucho.</span>"
 }
 ];
 
-const v = variants[Math.floor(Math.random()*variants.length)];
+const v = data[Math.floor(Math.random()*data.length)];
 
 const loadingTexts = [
 "Analizando tus respuestas...",
@@ -321,78 +333,76 @@ const loadingTexts = [
 "Preparando tu resultado personalizado..."
 ];
 
-let li=0;
+let step = 0;
 const loading = document.getElementById("loading");
-const interval = setInterval(()=>{
-loading.innerText = loadingTexts[li];
-li++;
-if(li>=loadingTexts.length){
-clearInterval(interval);
-showResult();
-}
-},1200);
 
-function showResult(){
+const timer = setInterval(()=>{
+loading.innerText = loadingTexts[step];
+step++;
+
+if(step >= loadingTexts.length){
+clearInterval(timer);
+render();
+}
+},1100);
+
+function render(){
 
 document.getElementById("bar").style.width="100%";
-loading.style.display="none";
 
-document.getElementById("sub").innerText=v.sub;
-document.getElementById("badge").innerText=v.badge;
-document.getElementById("badge").style.background=v.badgeBg;
-document.getElementById("badge").style.color=v.badgeColor;
+document.getElementById("sub").innerText = v.sub;
+document.getElementById("badge").innerText = v.badge;
+document.getElementById("badge").style.background = v.badgeBg;
+document.getElementById("badge").style.color = v.badgeColor;
 
-document.getElementById("title").innerText=v.title;
-document.getElementById("desc").innerText=v.desc;
-document.getElementById("bridgeText").innerText=v.bridge;
+document.getElementById("title").innerText = v.title;
+document.getElementById("desc").innerHTML = v.desc;
+document.getElementById("bridge").innerHTML = v.bridge;
 
-document.getElementById("cta").style.background=v.color;
+document.getElementById("btn").style.background = v.color;
 
-let deg=0;
-const finalDeg = (v.pct/100)*360;
-let num=0;
+let deg = 0;
+let val = 0;
+const target = (v.pct/100)*360;
 
 const gauge = document.getElementById("gauge");
 const pct = document.getElementById("pct");
 
 const anim = setInterval(()=>{
-deg += finalDeg/40;
-num += v.pct/40;
+deg += target/40;
+val += v.pct/40;
 
-if(deg>=finalDeg){
-deg=finalDeg;
-num=v.pct;
+if(deg >= target){
+deg = target;
+val = v.pct;
 clearInterval(anim);
 }
 
-gauge.style.background=`conic-gradient(${v.color} ${deg}deg,#e9e5df 0deg)`;
-pct.innerText=Math.round(num)+"%";
+gauge.style.background = `conic-gradient(${v.color} ${deg}deg,#ece8e2 0deg)`;
+pct.innerText = Math.round(val) + "%";
 
 },25);
 
-const box=document.getElementById("signals");
+const s = document.getElementById("signals");
 
-v.signals.forEach(s=>{
-const div=document.createElement("div");
-div.className="signal";
-div.innerHTML=`
-<div class="signal-title">${s[0]}</div>
-<div class="signal-desc">${s[1]}</div>
+v.signals.forEach(item=>{
+const div = document.createElement("div");
+div.className = "signal";
+div.innerHTML = `
+<strong>${item[0]}</strong>
+<span>${item[1]}</span>
 `;
-box.appendChild(div);
+s.appendChild(div);
 });
 
 document.querySelectorAll(".reveal").forEach((el,i)=>{
 setTimeout(()=>{
 el.classList.add("show");
-},300+(i*250));
+},250 + (i*220));
 });
 
+loading.style.display="none";
 }
-
-document.getElementById("cta").onclick=function(){
-window.location.href="#video";
-};
 </script>
 
 </body>
