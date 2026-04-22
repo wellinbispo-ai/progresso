@@ -22,7 +22,7 @@ color:#1a1a1a;
 .wrap{
 max-width:520px;
 margin:auto;
-padding:24px 18px 40px;
+padding:24px 18px 24px;
 }
 
 .eyebrow{
@@ -160,33 +160,34 @@ font-weight:700;
 color:#1a1a1a;
 }
 
-.fake-btn{
-width:100%;
-padding:18px 20px;
-border-radius:16px;
-font-size:17px;
+.final-call{
+text-align:center;
+padding:4px 4px 0;
+}
+
+.final-call .line1{
+font-size:16px;
 font-weight:700;
-text-align:center;
-color:#fff;
-margin-top:16px;
-animation:pulse 2s infinite;
-box-shadow:0 10px 24px rgba(0,0,0,.15);
-cursor:default;
-user-select:none;
-pointer-events:none;
-}
-
-@keyframes pulse{
-0%,100%{transform:scale(1)}
-50%{transform:scale(1.02)}
-}
-
-.micro{
-text-align:center;
-font-size:12px;
-color:#999;
-margin-top:10px;
 line-height:1.5;
+margin-bottom:10px;
+color:#1a1a1a;
+}
+
+.final-call .line2{
+font-size:14px;
+line-height:1.6;
+color:#666;
+margin-bottom:12px;
+}
+
+.arrow{
+font-size:28px;
+animation:bounce 1.6s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(8px)}
 }
 
 .reveal{
@@ -260,14 +261,10 @@ transition:width 1s ease;
 </div>
 
 <div class="card reveal">
-<div class="txt" id="bridge"></div>
-
-<div class="fake-btn" id="btn">
-🔓 Sí, quiero ver qué debo cambiar
-</div>
-
-<div class="micro">
-El siguiente paso puede cambiar cómo vives el cuidado
+<div class="final-call">
+<div class="line1">Lo que sigue puede ayudarte más de lo que imaginas</div>
+<div class="line2">Continúa abajo para descubrir qué cambiar primero y sentir alivio real.</div>
+<div class="arrow">👇</div>
 </div>
 </div>
 
@@ -288,8 +285,7 @@ signals:[
 ["Tu cuerpo está avisando","El cansancio ya no se resuelve solo descansando."],
 ["Vives en alerta","Tu mente sigue trabajando incluso de noche."],
 ["Te olvidaste de ti","Tus necesidades quedaron en pausa."]
-],
-bridge:"Lo que sientes <span class='highlight'>sí tiene solución</span>. En el siguiente paso descubrirás qué cambiar primero."
+]
 },
 {
 pct:65,
@@ -304,8 +300,7 @@ signals:[
 ["La culpa te mueve","Y eso agota más de lo que imaginas."],
 ["Tu identidad quedó atrás","Todo gira alrededor del cuidado."],
 ["No descansas de verdad","Tu mente nunca desconecta."]
-],
-bridge:"No necesitas más fuerza. <span class='highlight'>Necesitas método.</span> Y estás a punto de verlo."
+]
 },
 {
 pct:48,
@@ -320,8 +315,7 @@ signals:[
 ["Todo depende de ti","Eso no es sostenible."],
 ["Pedir ayuda pesa","Delegar te hace sentir culpa."],
 ["Vas en automático","Y eso también desgasta."]
-],
-bridge:"Todavía se puede revertir. <span class='highlight'>Lo siguiente puede ayudarte mucho.</span>"
+]
 }
 ];
 
@@ -357,9 +351,6 @@ document.getElementById("badge").style.color = v.badgeColor;
 
 document.getElementById("title").innerText = v.title;
 document.getElementById("desc").innerHTML = v.desc;
-document.getElementById("bridge").innerHTML = v.bridge;
-
-document.getElementById("btn").style.background = v.color;
 
 let deg = 0;
 let val = 0;
